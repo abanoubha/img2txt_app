@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IMG2TXT</string>
+    <string name="hello">أهلاً بك</string>
+    <string name="ocr_hint">اضغط هنا لكي تتعرف على الكلمات المكتوبه على صورة من الكاميرا</string>
+    <string name="ps_hint">لاحظ: هذا التطبيق لا يمكنه التعرف على الكلام المكتوب بخط اليد</string>
+    <string name="camera">الكاميرا</string>
+    <string name="gallery">الاستوديو</string>
+    <string name="copied">تم نسخ النص بنجاح</string>
+    <string name="no_text">لا يوجد نصوص لنسخها</string>
+    <string name="identifying">جاري التعرف على الكلمات …</string>
+    <string name="permissionHint">لابد أن توافق على إذن الذاكرة والكاميرا لكي تستطيع استخدام الكاميرا داخل التطبيق.</string>
+    <string name="image_to_ocr">التعرف الضوئي على الكلمات المكتوبة على الصورة</string>
+    <string name="get_image_from_gallery">جلب الصورة من الاستوديو</string>
+    <string name="arrow_to_camera_icon">سهم لأيقونة الكاميرا</string>
+    <string name="pdf">تحويل الپي  دي إف إلى نص</string>
+    <string name="showtxt">عرض النصوص المُستخلَصة</string>
+    <string name="showimg">عرض الصورة</string>
+    <string name="cpy">استخلاص النصوص المكتوبة على الصورة ثم نسخ النصوص المستخلصة</string>
+    <string name="facebook">رابط صفحة الفيسبوك</string>
+    <string name="linkedin">رابط حساب المطور أبانوب حنا على لينكدإن</string>
+    <string name="github">رابط حساب المطور أبانوب حنا على موقع جت هب</string>
+    <string name="telegram">رابط جروب المطور على تليجرام</string>
+    <string name="twitter">رابط حساب المطور على تويتر</string>
+    <string name="youtube">رابط قناة المطور على يوتيوب</string>
+    <string name="camera_button">زر الكاميرا</string>
+    <string name="gallery_button">زر الأستوديو</string>
+    <string name="copy_extracted_text">نسخ النصوص</string>
+    <string name="copy">نسخ</string>
+    <string name="about_me">عن المطور</string>
+    <string name="ok">موافق</string>
+    <string name="no">لا</string>
+    <string name="done">تم</string>
+    <string name="main_notice">أهلاً بك
+        \nأنصحك بما يلي
+        \n- استخدم أيقونة الصورة لجلب صورة من ستوديو الصور في الهاتف
+        \n- استخدم أيقونة الكاميرا لتصوير ورقة أو وثيقة مكتوبة باللغة العربية
+    </string>
+    <string name="permissions_notice">لن تستطيع استخدام الكاميرا لتصوير الورق والمستندات لأنك لم تعطي التطبيق الأذون والتصريحات اللازمة</string>
+    <string name="conf_notice">
+        لم يتم التعرف على الكلمات المكتوبة على الصورة بدقة بسبب سوء جودة الصورة. برجاء استخدام صورة أخرى أو إعادة التصوير.
+        \nلاحظ : التطبيق لا يُمكنه التعرف على الكلمات المكتوبه بخط اليد.</string>
+    <string name="dev_image">
+        صورة مطور التطبيق
+    </string>
+    <string name="google_play">متجر جوجل بلاي</string>
+    <string name="rate_the_app">تقييم التطبيق على جوجل بلاي</string>
+    <string name="gp_notice">حدث خطأ</string>
+</resources>

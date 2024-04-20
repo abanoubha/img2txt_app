@@ -1,0 +1,76 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.softwarepharaoh.img2txt"
+        minSdk 23
+        targetSdk 34
+        versionCode 23
+        versionName "2.5.1"
+        vectorDrawables.useSupportLibrary true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    namespace 'com.softwarepharaoh.img2txt'
+}
+
+dependencies {
+//    implementation 'cz.adaptech:tesseract4android:4.1.1'
+//    implementation 'cz.adaptech.tesseract4android:tesseract4android:4.4.0'
+    // better by 4.89% to 6.36% ref : https://docs.google.com/spreadsheets/d/1MQuBcowushPIvi_4tHi_iVYOtGJlo_elSQ5At9KdDF8/edit
+    implementation 'cz.adaptech.tesseract4android:tesseract4android-openmp:4.5.0'
+
+    implementation "com.vanniktech:android-image-cropper:4.5.0"
+    // implementation 'com.github.yalantis:ucrop:2.2.6'
+    // implementation 'com.github.CanHub:Android-Image-Cropper:'
+    // implementation 'com.theartofdev.edmodo:android-image-cropper:4.0.0'
+
+    implementation 'com.google.android.gms:play-services-ads:23.0.0'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0"
+
+    // In app review API
+    implementation 'com.google.android.play:core:1.10.3'
+    implementation 'com.google.android.play:core-ktx:1.8.1'
+
+    implementation 'androidx.core:core-ktx:1.13.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
