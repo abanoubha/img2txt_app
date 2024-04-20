@@ -44,22 +44,6 @@ import kotlinx.coroutines.withContext
 import java.io.FileNotFoundException
 import java.io.InputStream
 
-// v2.3.0 -> v2.5.0
-// [x] use onActivityResult (modern code)
-// [x] use general/universal openUrl() method/function
-// [x] better way of cropping images
-// [x] fix imageView height
-// [x] translations (English & Arabic), default is English
-// [x] About Me
-// [x] rate us on Google Play
-// [x] link to Google Play
-// v2.5.0 -> v3.0.0
-// [ ] redesign UI/UX
-// [ ] convert class scope variable into local variables (main vs local-var-conv)
-// [ ] batch processing
-// [ ] PDF -> Images.foreach(ocr)
-// [ ] remove ads : 100 LE once or 5 LE each month
-// [ ] FCM : notification from firebase with updates/tips/congrats
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bmp: Bitmap
