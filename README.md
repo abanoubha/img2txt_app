@@ -7,8 +7,4 @@ Install the img2txt app from Google Play: <https://play.google.com/store/apps/de
 ## Tasks
 
 - [x] first opensource version release is v2.5.1 on April 21st, 2024
-
-## Tasks
-
-- [x] first opensource version release is v2.5.1 on April 21st, 2024
-
+- [ ] simplify app UI layout
