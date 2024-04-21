@@ -186,10 +186,10 @@ class MainActivity : AppCompatActivity() {
         binding.rateUsBtn.setOnClickListener {
             val manager = ReviewManagerFactory.create(applicationContext)
             val request = manager.requestReviewFlow()
-            request.addOnCompleteListener { request ->
-                if (request.isSuccessful) {
+            request.addOnCompleteListener { req ->
+                if (req.isSuccessful) {
                     // We got the ReviewInfo object
-                    val reviewInfo = request.result
+                    val reviewInfo = req.result
                     val flow = manager.launchReviewFlow(this@MainActivity, reviewInfo)
                     flow.addOnCompleteListener { _ ->
                         // The flow has finished. The API does not indicate whether the user
