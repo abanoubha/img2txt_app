@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 deleteAllPhotos()
             } else {
                 // An error occurred.
-                binding.resultTextView.text = "Error: ${result.error}"
+                "Error: ${result.error}".also { binding.resultTextView.text = it }
             }
         }
 
