@@ -21,8 +21,8 @@
     <string name="telegram">Telegram group</string>
     <string name="twitter">Twitter account</string>
     <string name="youtube">YouTube channel</string>
-    <string name="camera_button">Camera Button</string>
-    <string name="gallery_button">Gallery Button</string>
+    <string name="camera_button">capture an image with camera</string>
+    <string name="gallery_button">grab an image from gallery</string>
     <string name="copy_extracted_text">copy extracted text</string>
     <string name="copy">Copy</string>
     <string name="about_me">
