@@ -27,7 +27,19 @@
     <string name="gallery_button">زر الأستوديو</string>
     <string name="copy_extracted_text">نسخ النصوص</string>
     <string name="copy">نسخ</string>
-    <string name="about_me">عن المطور</string>
+    <string name="about_me">
+        إسمي أبانوب حنا
+        \nمبرمج
+        \nلدي خبرة في
+        \n→ جافا/كوتلن لتطبيقات الأندرويد.
+        \n→ دارت/فلاتر لتطبيقات الموبايل.
+        \n→ پي إتش پي/لاراڤيل للمواقع الإلكترونية.
+        \n→ جو لتطبيقات التيرمينال و الباك إند.
+        \n→ إتش تي إم إل HTML
+        \n→ سي إس إس CSS
+        \n→ تيل-وِنْد Tailwind
+        \n→ جافاسكربت
+    </string>
     <string name="ok">موافق</string>
     <string name="no">لا</string>
     <string name="done">تم</string>

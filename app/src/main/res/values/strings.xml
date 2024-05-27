@@ -29,10 +29,12 @@
         My name is Abanoub Hanna
         \nsoftware developer
         \nI experienced coding in
-        \n→ Java &amp; Kotlin for Android development
-        \n→ Dart in Flutter for mobile app development
-        \n→ PHP in Laravel for developing web apps and websites
+        \n→ Java/Kotlin for Android app dev.
+        \n→ Dart/Flutter for mobile app dev.
+        \n→ PHP/Laravel for web apps and websites
         \n→ Go for CLI apps and web backend
+        \n→ HTML/CSS/Tailwind for UI/frontend
+        \n→ Javascript for frontend/DOM
     </string>
     <string name="camera">Camera</string>
     <string name="ok">OK</string>
