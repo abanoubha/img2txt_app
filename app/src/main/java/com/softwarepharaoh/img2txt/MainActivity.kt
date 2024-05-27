@@ -32,7 +32,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.play.core.review.ReviewManagerFactory
 import com.googlecode.leptonica.android.WriteFile
 import com.googlecode.tesseract.android.ResultIterator
 import com.googlecode.tesseract.android.TessBaseAPI
@@ -179,27 +178,6 @@ class MainActivity : AppCompatActivity() {
                 takeImage.launch(cameraIntent)
             } else {
                 showDialogMsg() //if yes see the permission requests
-            }
-        }
-
-        // In app review API : https://stackoverflow.com/a/63404029/5943537
-        binding.rateUsBtn.setOnClickListener {
-            val manager = ReviewManagerFactory.create(applicationContext)
-            val request = manager.requestReviewFlow()
-            request.addOnCompleteListener { req ->
-                if (req.isSuccessful) {
-                    // We got the ReviewInfo object
-                    val reviewInfo = req.result
-                    val flow = manager.launchReviewFlow(this@MainActivity, reviewInfo)
-                    flow.addOnCompleteListener { _ ->
-                        // The flow has finished. The API does not indicate whether the user
-                        // reviewed or not, or even whether the review dialog was shown. Thus, no
-                        // matter the result, we continue our app flow.
-                    }
-                } else {
-                    // There was some problem, continue regardless of the result.
-                    showDialogNotice(getString(R.string.gp_notice))
-                }
             }
         }
 

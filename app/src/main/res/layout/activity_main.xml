@@ -196,17 +196,6 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/rateUsBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/rate_the_app"
-                app:drawableLeftCompat="@drawable/google_play_ic" />
-
         </LinearLayout>
 
     </ScrollView>
