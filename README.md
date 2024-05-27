@@ -19,6 +19,15 @@ Install the img2txt app from Google Play:
 - [x] ~~rate us on Google Play~~ (removed)
 - [x] link to Google Play
 - [x] first opensource version release is v2.5.1 on April 21st, 2024
+- [x] Android 6 (Marshmallow) (SDK 23)
+- [x] Android 7
+- [x] Android 8
+- [x] Android 9
+- [x] Android 10
+- [x] Android 11
+- [x] Android 12
+- [x] Android 13
+- [x] Android 14 (SDK 34)
 - [ ] simplify app UI layout
 - [ ] batch processing (in bulk)
 - [ ] PDF -> Images.foreach(ocr)
