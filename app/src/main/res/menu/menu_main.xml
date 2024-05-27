@@ -14,4 +14,10 @@
         android:orderInCategory="300"
         android:title="@string/gallery"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/info"
+        android:icon="@drawable/abanoub_hanna"
+        android:orderInCategory="400"
+        android:title="@string/me"
+        app:showAsAction="ifRoom" />
 </menu>
