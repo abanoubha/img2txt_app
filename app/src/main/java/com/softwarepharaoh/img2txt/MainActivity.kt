@@ -278,6 +278,9 @@ class MainActivity : AppCompatActivity() {
             deleteAllPhotos()
             grabImage.launch("image/*")
             return true
+        } else if (id == R.id.info){
+            // go to the info activity
+            return true
         }
         return super.onOptionsItemSelected(item)
     }
