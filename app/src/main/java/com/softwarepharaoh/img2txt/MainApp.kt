@@ -37,15 +37,15 @@ class MainApp : Application() {
         Thread(run).start()
     }
 
-    private fun copyFiles(fname: String) {
+    private fun copyFiles(filename: String) {
         val assetManager: AssetManager = applicationContext.assets //MainApplication().instance.assets
         var out: OutputStream? = null
         try {
-            val inp = assetManager.open(fname)
+            val inp = assetManager.open(filename)
             val tessPath = tessDataPath()
             val tessFolder = File(tessPath)
             if (!tessFolder.exists()) tessFolder.mkdir()
-            val tessData = "$tessPath/$fname"
+            val tessData = "$tessPath/$filename"
             val tessFile = File(tessData)
             if (!tessFile.exists()) {
                 out = FileOutputStream(tessData)
