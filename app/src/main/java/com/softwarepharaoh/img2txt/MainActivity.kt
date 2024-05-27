@@ -100,34 +100,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.fbBtn.setOnClickListener {
-            openUrl("https://www.facebook.com/AbanoubHannaDotCom/")
-        }
-
-        binding.inBtn.setOnClickListener {
-            openUrl("https://www.linkedin.com/in/abanoub-hanna/")
-        }
-
-        binding.gitBtn.setOnClickListener {
-            openUrl("https://github.com/abanoubha")
-        }
-
-        binding.telegramBtn.setOnClickListener {
-            openUrl("https://t.me/abanoubchan")
-        }
-
-        binding.twitterBtn.setOnClickListener {
-            openUrl("https://twitter.com/abanoubha")
-        }
-
-        binding.ytBtn.setOnClickListener {
-            openUrl("https://youtube.com/@abanoubha")
-        }
-
-        binding.gpBtn.setOnClickListener {
-            openUrl("https://play.google.com/store/apps/details?id=com.softwarepharaoh.img2txt")
-        }
-
         grabImage = registerForActivityResult(
             ActivityResultContracts.GetContent()
         ) { uri: Uri? ->
