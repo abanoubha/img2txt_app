@@ -19,7 +19,6 @@
     <string name="linkedin">LinkedIn account link</string>
     <string name="github">Github account link</string>
     <string name="telegram">Telegram group</string>
-    <string name="twitter">Twitter account</string>
     <string name="youtube">YouTube channel</string>
     <string name="camera_button">capture an image with camera</string>
     <string name="gallery_button">grab an image from gallery</string>
@@ -56,4 +55,5 @@
     <string name="dev_image">photo of the app developer</string>
     <string name="google_play">Google Play</string>
     <string name="me">Abanoub Hanna</string>
+    <string name="twitter">\@AbanoubHA | X (Twitter)</string>
 </resources>

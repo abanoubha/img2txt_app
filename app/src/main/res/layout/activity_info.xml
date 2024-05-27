@@ -29,16 +29,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <ImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/twitterBtn"
-            android:layout_width="@dimen/iconSize"
-            android:layout_height="@dimen/iconSize"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/twitter"
-            android:src="@drawable/ic_twitter"
-            android:background="@android:color/transparent" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/twitter"
+            android:icon="@drawable/ic_twitter"
+            app:icon="@drawable/ic_twitter"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/fbBtn"
