@@ -279,7 +279,7 @@ class MainActivity : AppCompatActivity() {
             grabImage.launch("image/*")
             return true
         } else if (id == R.id.info){
-            // go to the info activity
+            startActivity(Intent(this, InfoActivity::class.java))
             return true
         }
         return super.onOptionsItemSelected(item)
