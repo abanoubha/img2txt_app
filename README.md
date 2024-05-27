@@ -2,7 +2,7 @@
 
 A free opensource Android app to extract text from images using OCR technology.
 
-- app size 42.1 MB
+- app size 42 MB
 - works on all versions of Android; from Android 6 up to Android 14 (the latest version release)
 
 Install the img2txt app from Google Play:  
