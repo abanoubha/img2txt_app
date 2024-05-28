@@ -17,7 +17,6 @@
     <string name="showtxt">عرض النصوص المُستخلَصة</string>
     <string name="showimg">عرض الصورة</string>
     <string name="cpy">استخلاص النصوص المكتوبة على الصورة ثم نسخ النصوص المستخلصة</string>
-    <string name="facebook">رابط صفحة الفيسبوك</string>
     <string name="linkedin">رابط حساب المطور أبانوب حنا على لينكدإن</string>
     <string name="github">رابط حساب المطور أبانوب حنا على موقع جت هب</string>
     <string name="telegram">رابط جروب المطور على تليجرام</string>
@@ -57,4 +56,5 @@
     <string name="google_play">متجر جوجل بلاي</string>
     <string name="me">أبانوب حنا</string>
     <string name="twitter">\@AbanoubHA | X (Twitter)</string>
+    <string name="facebook">Abanoub Hanna | Facebook</string>
 </resources>
