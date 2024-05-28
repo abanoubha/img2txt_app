@@ -27,7 +27,8 @@ Install the img2txt app from Google Play:
 - [x] Android 11
 - [x] Android 12
 - [x] Android 13
-- [x] Android 14 (SDK 34)
-- [ ] simplify app UI layout
+- [x] Android 14 (SDK 34) ([v2.6.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.6.0))
+- [x] simplify app UI layout
+- [x] new simpler theme
 - [ ] batch processing (in bulk)
 - [ ] PDF -> Images.foreach(ocr)
