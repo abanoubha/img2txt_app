@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#F5F5F7"/> <!-- Light gray background color -->
+
+    <!-- Optional: Add a gradient instead of a solid color -->
+    <!-- <gradient
+         android:startColor="#EDEDED"
+         android:endColor="#FFFFFF"
+         android:angle="90"/> -->
+
+</shape>
