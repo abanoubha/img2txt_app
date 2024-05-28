@@ -79,23 +79,13 @@
             android:icon="@drawable/ic_telegram"
             app:icon="@drawable/ic_telegram"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal">
-
-        <ImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/gpBtn"
-            android:layout_width="@dimen/iconSize"
-            android:layout_height="@dimen/iconSize"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/google_play"
-            android:src="@drawable/google_play_ic"
-            android:background="@android:color/transparent"
-            app:tint="?attr/colorAccent" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/google_play"
+            android:icon="@drawable/google_play_ic"
+            app:icon="@drawable/google_play_ic"/>
 
     </LinearLayout>
 
