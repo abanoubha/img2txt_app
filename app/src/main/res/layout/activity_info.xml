@@ -63,6 +63,14 @@
             android:icon="@drawable/ic_youtube"
             app:icon="@drawable/ic_youtube"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/gitBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/github"
+            android:icon="@drawable/ic_github"
+            app:icon="@drawable/ic_github"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -70,15 +78,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/gitBtn"
-            android:layout_width="@dimen/iconSize"
-            android:layout_height="@dimen/iconSize"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/github"
-            android:src="@drawable/ic_github"
-            android:background="@android:color/transparent" />
 
         <ImageButton
             android:id="@+id/telegramBtn"
