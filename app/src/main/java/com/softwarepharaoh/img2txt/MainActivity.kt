@@ -166,12 +166,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun openUrl(url: String?) {
-        val openURL = Intent(Intent.ACTION_VIEW)
-        openURL.data = Uri.parse(url)
-        startActivity(openURL)
-    }
-
     private fun loadAds() {
         MobileAds.initialize(this) {}
 
