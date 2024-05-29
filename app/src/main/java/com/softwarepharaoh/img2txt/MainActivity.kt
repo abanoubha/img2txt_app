@@ -577,6 +577,7 @@ class MainActivity : AppCompatActivity() {
                     binding.resultTextView.postOnAnimation {
                         binding.resultTextView.text = recognizedText.toString()
                     }
+                    showDialogNotice(getString(R.string.conf_notice))
                 }
 
                 return@launch
@@ -687,6 +688,10 @@ class MainActivity : AppCompatActivity() {
                     mlKitTextWConfidence.values.sum() / mlKitTextWConfidence.size
                 } else {
                     0
+                }
+
+                if (mlKitAccuracy < 60) {
+                    showDialogNotice(getString(R.string.conf_notice))
                 }
 
                 gText = recognizedText.toString()
