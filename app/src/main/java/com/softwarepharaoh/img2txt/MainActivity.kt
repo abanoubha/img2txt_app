@@ -47,7 +47,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.FileNotFoundException
 import java.io.InputStream
-import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
