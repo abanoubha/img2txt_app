@@ -63,3 +63,10 @@ Install the img2txt app from Google Play:
 - [ ] batch processing (in bulk)
 - [ ] PDF -> Images.foreach(ocr)
 - [ ] expose more functions to Java : cpp files in `tesseract4android/src/main/cpp/tesseract` and java files in `tesseract4android/src/main/java/com/googlecode/tesseract/android` must be modified/added.
+- [ ] support Hindi ( Indian language )
+- [ ] support Farsi ( Persian language )
+- [ ] save OCR history (aka : Detailed scanned images history)
+- [ ] save extracted text as PDF
+- [ ] choose more than one image to OCR
+- [ ] pre-process image with thresholding for more clarity and better results/accuracy/extracted text
+- [ ] Ability to edit image before/after running OCR on it (manual)
