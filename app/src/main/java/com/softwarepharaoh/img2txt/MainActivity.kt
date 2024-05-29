@@ -489,6 +489,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // TODO: remove it later
+        textToShow.append("<br/>-------<br/>")
         textToShow.append("Google Vision:<br/>$gVisionText<br/>")
         textToShow.append("ML Kit:<br/>$mlKitText<br/>")
         textToShow.append("Tesseract:<br/>$tesseractText<br/>")
@@ -654,7 +655,7 @@ class MainActivity : AppCompatActivity() {
 //                        val lineText = line.text
 //                        val lineCornerPoints = line.cornerPoints
 //                        val lineFrame = line.boundingBox
-                        recognizedText.appendLine(line.text)
+                        recognizedText.append(line.text)
 
 //                        for (element in line.elements) {
 //                            val elementText = element.text
@@ -664,15 +665,16 @@ class MainActivity : AppCompatActivity() {
 
                     } // lines
                 }
+
+                // TODO: use accurate meanConfidence
+                mlKitAccuracy = 70
+                mlKitText = recognizedText.toString()
             }
             .addOnFailureListener { _ ->
                 //recognizedText.appendLine(e.message)
                 recognizedText.append("")
                 mlKitAccuracy = 0
             }
-
-        mlKitAccuracy = 99
-        mlKitText = recognizedText.toString()
 
     } // googleMLKitOCR
 
