@@ -694,11 +694,27 @@ class MainActivity : AppCompatActivity() {
 //                        val lineText = line.text
 //                        val lineCornerPoints = line.cornerPoints
 //                        val lineFrame = line.boundingBox
-                        recognizedText.append(line.text)
                         recognizedText.append("<br/>")
 
                         for (element in line.elements) {
-                            mlKitTextWConfidence[element.text] = (element.confidence * 100).toInt()
+                            val word = element.text
+                            val acc = (element.confidence * 100).toInt()
+
+                            if (acc > 90) {
+                                recognizedText.append(word)
+                                recognizedText.append(" ")
+                            } else if (acc > 80) {
+                                recognizedText.append("<span style='color:purple;'>")
+                                recognizedText.append(word)
+                                recognizedText.append("</span> ")
+                            } else if (acc > 50){
+                                recognizedText.append("<span style='color:red;'>")
+                                recognizedText.append(word)
+                                recognizedText.append("</span> ")
+                            } // accuracy less than 50 -> do not show them
+
+                            mlKitTextWConfidence[word] = acc
+
 //                            val elementText = element.text
 //                            val elementCornerPoints = element.cornerPoints
 //                            val elementFrame = element.boundingBox
