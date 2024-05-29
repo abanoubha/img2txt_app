@@ -39,5 +39,6 @@ Install the img2txt app from Google Play:
 - [x] prompt the app user to choose the language of text on the image before processing it
 - [x] add line breaks (newline) in extracted text (ML Kit & Tesseract OCR)
 - [x] only show words with confidence > 50
+- [x] make result/extracted text editable
 - [ ] batch processing (in bulk)
 - [ ] PDF -> Images.foreach(ocr)
