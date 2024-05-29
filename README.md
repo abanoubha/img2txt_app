@@ -32,5 +32,6 @@ Install the img2txt app from Google Play:
 - [x] new simpler theme
 - [x] show alert/notice if the mean_confidence of result text is less than 60%
 - [x] show thresholded/cleaned image (created by Tesseract)
+- [x] show bounding rectangles/boxes around each recognized word
 - [ ] batch processing (in bulk)
 - [ ] PDF -> Images.foreach(ocr)
