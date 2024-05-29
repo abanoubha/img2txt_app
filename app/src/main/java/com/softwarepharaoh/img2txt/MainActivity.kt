@@ -607,11 +607,11 @@ class MainActivity : AppCompatActivity() {
                     recognizedText.append("<span style='color:purple;'>")
                     recognizedText.append(word)
                     recognizedText.append("</span> ")
-                } else { // accuracy less than 80
+                } else if (acc > 50){
                     recognizedText.append("<span style='color:red;'>")
                     recognizedText.append(word)
                     recognizedText.append("</span> ")
-                }
+                } // accuracy less than 50 -> do not show them
 
                 tesseractTextWConfidence[word] = acc
 
