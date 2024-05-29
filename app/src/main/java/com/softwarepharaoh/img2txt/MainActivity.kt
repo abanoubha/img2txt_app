@@ -594,6 +594,13 @@ class MainActivity : AppCompatActivity() {
             val lineLevel = TessBaseAPI.PageIteratorLevel.RIL_TEXTLINE
             val level = TessBaseAPI.PageIteratorLevel.RIL_WORD
             iter.begin()
+            bmp = bmp.copy(Bitmap.Config.RGB_565, true)
+            val canvas = Canvas(bmp)
+            val paint = Paint()
+            paint.alpha = 0xA0
+            paint.color = Color.BLUE
+            paint.style = Paint.Style.STROKE
+            paint.strokeWidth = 1f
 
             do {
                 val word: String = iter.getUTF8Text(level)
@@ -616,7 +623,13 @@ class MainActivity : AppCompatActivity() {
                     recognizedText.append("<br/>")
                 }
 
+                canvas.drawRect(iter.getBoundingRect(level), paint)
+
             } while (iter.next(level))
+
+            withContext(Dispatchers.Main) {
+                updateImageView()
+            }
 
             // from docs : "The returned iterator must be deleted after use."
             iter.delete()
