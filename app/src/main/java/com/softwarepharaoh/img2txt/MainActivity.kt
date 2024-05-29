@@ -11,7 +11,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
-import android.util.Log
+import android.util.SparseArray
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -31,8 +31,13 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.vision.Frame
+import com.google.android.gms.vision.text.TextBlock
+import com.google.android.gms.vision.text.TextRecognizer
 import com.google.android.material.snackbar.Snackbar
-import com.googlecode.leptonica.android.WriteFile
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.googlecode.tesseract.android.ResultIterator
 import com.googlecode.tesseract.android.TessBaseAPI
 import com.softwarepharaoh.img2txt.databinding.ActivityMainBinding
@@ -42,8 +47,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.FileNotFoundException
 import java.io.InputStream
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
+
+    private var tesseractAccuracy = 0
+    private var gVisionAccuracy = 0
+    private var mlKitAccuracy = 0
+    private var tesseractText = ""
+    private var gVisionText = ""
+    private var mlKitText = ""
 
     private lateinit var bmp: Bitmap
     private lateinit var cameraPermission: Array<String>
@@ -453,49 +466,121 @@ class MainActivity : AppCompatActivity() {
     private fun recognize() {
         binding.resultTextView.text = ""
 
-        binding.progressbar.visibility = View.VISIBLE
+        binding.progressbar.postOnAnimation {
+            binding.progressbar.visibility = View.VISIBLE
+        }
 
-        CoroutineScope(Dispatchers.IO).launch {
+        // tesseract, google vision, ml kit
+        tesseractOCR(bmp)
+        googleVisionOCR(bmp)
+        googleMLKitOCR(bmp)
 
-            initAPI()
-
-            //baseAPI.setImage(ReadFile.readBitmap(bmp))
-            baseAPI.setImage(bmp)
-
-            //show native thresholded image
-            bmp = WriteFile.writeBitmap(baseAPI.thresholdedImage)
-            withContext(Dispatchers.Main) {
-                updateImageView()
+        if (tesseractAccuracy>=mlKitAccuracy && tesseractAccuracy>=gVisionAccuracy){
+            binding.resultTextView.postOnAnimation {
+                binding.resultTextView.text = HtmlCompat.fromHtml(
+                    tesseractText,
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+                binding.resultTextView.visibility = View.VISIBLE
             }
+        } else if (mlKitAccuracy>=tesseractAccuracy&&mlKitAccuracy>=gVisionAccuracy){
+            binding.resultTextView.postOnAnimation {
+                binding.resultTextView.text = HtmlCompat.fromHtml(
+                    mlKitText,
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+                binding.resultTextView.visibility = View.VISIBLE
+            }
+        } else { // gVisionAccuracy>=tesseractAccuracy&&gVisionAccuracy>=mlKitAccuracy
+            binding.resultTextView.postOnAnimation {
+                binding.resultTextView.text = HtmlCompat.fromHtml(
+                    gVisionText,
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+                binding.resultTextView.visibility = View.VISIBLE
+            }
+        }
+
+        binding.scroll.post {
+            binding.scroll.smoothScrollTo(0, binding.resultTextView.top)
+        }
+
+        binding.progressbar.postOnAnimation {
+            binding.progressbar.visibility = View.GONE
+        }
+
+    } // end of recognize func
+
+    private fun tesseractOCR(b: Bitmap) {
+        CoroutineScope(Dispatchers.IO).launch {
+            baseAPI = TessBaseAPI()
+            baseAPI.pageSegMode = TessBaseAPI.PageSegMode.PSM_AUTO_OSD
+            //val dataPath: String = MainApplication().instance!!.getTessDataParentDirectory()
+            val dataPath: String = applicationContext.getExternalFilesDir(null)!!.absolutePath
+            //val dataPath: String? = this.getExternalFilesDir(null)!!.absolutePath
+            //baseAPI.init(dataPath, "ara", TessBaseAPI.OEM_LSTM_ONLY) // mean conf = 71
+            //baseAPI.init(dataPath, "ara+eng", TessBaseAPI.OEM_DEFAULT) // mean conf = 74
+
+            //val inited = baseAPI.init(dataPath, "ara+eng", TessBaseAPI.OEM_TESSERACT_LSTM_COMBINED) // best accuracy
+            // ^ this causes error
+
+            val initialized = baseAPI.init(
+                dataPath,
+                "ara+eng",
+                TessBaseAPI.OEM_LSTM_ONLY
+            ) // mean conf = 77, 70, 83
+
+            if (!initialized) {
+                // Error initializing Tesseract (wrong data path or language)
+                baseAPI.recycle()
+
+                withContext(Dispatchers.Main) {
+                    binding.resultTextView.postOnAnimation {
+                        binding.resultTextView.text = "Could not run OCR process (TESS_ERR_0)"
+                    }
+                    tesseractAccuracy = 1
+                }
+                return@launch
+            }
+
+            baseAPI.setImage(b)
 
             val recognizedText = StringBuilder()
 
             try {
-                //recognizedText =
                 baseAPI.utF8Text
-                //recognizedText += "<br/>mean conf : " + baseAPI.meanConfidence() + " <br/>----------<br/>"
             } catch (e: Exception) {
-                Log.e("error", "err msg: " + e.message.toString(), e)
-                recognizedText.append("Error: $e")
-                //recognizedText = "Error: $e"
+                recognizedText.append(e.message)
+
+                withContext(Dispatchers.Main) {
+                    binding.resultTextView.postOnAnimation {
+                        binding.resultTextView.text = recognizedText.toString()
+                    }
+                    tesseractAccuracy = 1
+                }
+
+                return@launch
             }
 
             withContext(Dispatchers.Main) {
-                if (baseAPI.meanConfidence() < 60) {
-                    showDialogNotice(getString(R.string.conf_notice))
+                tesseractAccuracy = baseAPI.meanConfidence()
+            }
+
+            if (baseAPI.meanConfidence() < 60) {
+                recognizedText.append("Could not recognize text on the image")
+
+                withContext(Dispatchers.Main) {
+                    binding.resultTextView.postOnAnimation {
+                        binding.resultTextView.text = recognizedText.toString()
+                    }
                 }
+
+                return@launch
             }
 
             val iter: ResultIterator = baseAPI.resultIterator
             val level = TessBaseAPI.PageIteratorLevel.RIL_WORD
             iter.begin()
-            bmp = bmp.copy(Bitmap.Config.RGB_565, true)
-            val canvas = Canvas(bmp)
-            val paint = Paint()
-            paint.alpha = 0xA0
-            paint.color = Color.BLUE
-            paint.style = Paint.Style.STROKE
-            paint.strokeWidth = 1f
 
             do {
                 if (iter.confidence(level) > 90) {
@@ -511,73 +596,80 @@ class MainActivity : AppCompatActivity() {
                     recognizedText.append("</span> ")
                 }
 
-//                recognizedText += if (iter.confidence(level) > 90) {
-//                    iter.getUTF8Text(level) + " "
-//                } else if (iter.confidence(level) > 80) {
-//                    "<span style='color:purple;'>" + iter.getUTF8Text(level) + "</span> "
-//                } else { // accuracy less than 80
-//                    "<span style='color:red;'>" + iter.getUTF8Text(level) + "</span> "
-//                }
-
-                canvas.drawRect(iter.getBoundingRect(level), paint)
-
-                withContext(Dispatchers.Main) {
-                    updateImageView()
-                }
-
             } while (iter.next(level))
 
             // from docs : "The returned iterator must be deleted after use."
             iter.delete()
-
-            withContext(Dispatchers.Main) {
-                binding.resultTextView.postOnAnimation {
-                    binding.resultTextView.text = HtmlCompat.fromHtml(
-                        recognizedText.toString(),
-                        HtmlCompat.FROM_HTML_MODE_LEGACY
-                    )
-                    binding.resultTextView.visibility = View.VISIBLE
-                }
-                binding.scroll.post {
-                    binding.scroll.smoothScrollTo(0, binding.resultTextView.top)
-                }
-            }
-
-            //baseAPI.clear();
+            //baseAPI.clear()
             baseAPI.recycle()
 
             withContext(Dispatchers.Main) {
-                binding.progressbar.postOnAnimation {
-                    binding.progressbar.visibility = View.GONE
-                }
+                binding.resultTextView.text = HtmlCompat.fromHtml(
+                    recognizedText.toString(),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
             }
 
-        } // end of IO coroutine
-    } // end of recognize func
+        } // IO Coroutine
+    } // tesseractOCR
 
-    private fun initAPI() {
-        baseAPI = TessBaseAPI()
-        baseAPI.pageSegMode = TessBaseAPI.PageSegMode.PSM_AUTO_OSD
-        //val dataPath: String = MainApplication().instance!!.getTessDataParentDirectory()
-        val dataPath: String = applicationContext.getExternalFilesDir(null)!!.absolutePath
-        //val dataPath: String? = this.getExternalFilesDir(null)!!.absolutePath
-        //baseAPI.init(dataPath, "ara", TessBaseAPI.OEM_LSTM_ONLY) // mean conf = 71
-        //baseAPI.init(dataPath, "ara+eng", TessBaseAPI.OEM_DEFAULT) // mean conf = 74
+    // use old Google Vision local API
+    private fun googleVisionOCR(b: Bitmap) {
+        val textRecognizer: TextRecognizer = TextRecognizer.Builder(applicationContext).build()
+        if (textRecognizer.isOperational) {
+            val frame: Frame = Frame.Builder().setBitmap(b).build()
+            val items: SparseArray<TextBlock> = textRecognizer.detect(frame)
+            val recognizedText = StringBuilder()
+            for (i in 0 until items.size()) {
+                val block: TextBlock = items.valueAt(i)
+                recognizedText.append(block.value.toString(), ' ')
+            }
 
-        //val inited = baseAPI.init(dataPath, "ara+eng", TessBaseAPI.OEM_TESSERACT_LSTM_COMBINED) // best accuracy
-        // ^ this causes error
-
-        val inited = baseAPI.init(
-            dataPath,
-            "ara+eng",
-            TessBaseAPI.OEM_LSTM_ONLY
-        ) // mean conf = 77, 70, 83
-        if (!inited) {
-            // Error initializing Tesseract (wrong data path or language)
-            baseAPI.recycle()
-            return
+            gVisionAccuracy = 99 // high number for now, until i figure out how to get meanConfidence
+            gVisionText = recognizedText.toString()
         }
-    }
+
+        gVisionAccuracy = 0
+
+    } // googleVisionOCR
+
+    // use modern Google ML Kit local API
+    // implementation 'com.google.mlkit:text-recognition:17.0.0'
+    private fun googleMLKitOCR(b: Bitmap) {
+        val image = InputImage.fromBitmap(b, 0)
+        val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+        val recognizedText = StringBuilder()
+        val result = recognizer.process(image)
+            .addOnSuccessListener { visionText ->
+                for (block in visionText.textBlocks) {
+//                    val boundingBox = block.boundingBox
+//                    val cornerPoints = block.cornerPoints
+//                    val text = block.text
+                    for (line in block.lines) {
+//                        val lineText = line.text
+//                        val lineCornerPoints = line.cornerPoints
+//                        val lineFrame = line.boundingBox
+                        recognizedText.appendLine(line.text)
+
+//                        for (element in line.elements) {
+//                            val elementText = element.text
+//                            val elementCornerPoints = element.cornerPoints
+//                            val elementFrame = element.boundingBox
+//                        } // elements
+
+                    } // lines
+                }
+            }
+            .addOnFailureListener { _ ->
+                //recognizedText.appendLine(e.message)
+                recognizedText.append("")
+                mlKitAccuracy = 0
+            }
+
+        mlKitAccuracy = 99
+        mlKitText = recognizedText.toString()
+
+    } // googleMLKitOCR
 
     companion object {
         // const val IMAGE_GALLERY_REQUEST = 10
