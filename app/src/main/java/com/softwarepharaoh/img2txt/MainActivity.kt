@@ -98,7 +98,9 @@ class MainActivity : AppCompatActivity() {
                 updateImageView()
                 binding.resultTextView.visibility = View.GONE
                 updateImageView()
-                recognize()
+                // get languages of the paper/image
+                val languages = getLanguages()
+                recognize(languages)
                 deleteAllPhotos()
             } else {
                 // An error occurred.
@@ -172,6 +174,33 @@ class MainActivity : AppCompatActivity() {
         onSharedIntent()
 
     } // onCreate
+
+    private fun getLanguages(): String {
+        var langs: String = ""
+
+        val builder = AlertDialog.Builder(this@MainActivity)
+
+        builder.setTitle(R.string.arabicOrEnglishOrBoth)
+
+        val items = arrayOf(
+            getString(R.string.arabic),
+            getString(R.string.english),
+            getString(R.string.both)
+        )
+
+        builder.setItems(items) { _, which ->
+            when (which) {
+                0 -> langs = "ara"
+                1 -> langs = "eng"
+                2 -> langs = "ara+eng"
+            }
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+
+        return langs
+    }
 
     private fun updateImageView() {
         binding.ocrImage.postOnAnimation {
@@ -465,22 +494,24 @@ class MainActivity : AppCompatActivity() {
         else -> @Suppress("DEPRECATION") getParcelableExtra(key) as? T
     }
 
-    private fun recognize() {
+    private fun recognize(languages: String) {
         binding.resultTextView.text = ""
 
         binding.progressbar.postOnAnimation {
             binding.progressbar.visibility = View.VISIBLE
         }
 
-        // tesseract, google vision, ml kit
-        tesseractOCR(bmp)
-        googleVisionOCR(bmp)
-        googleMLKitOCR(bmp)
+        if (languages === "eng") {
+            googleVisionOCR(bmp)
+            googleMLKitOCR(bmp)
+        } else {
+            tesseractOCR(bmp)
+        }
 
     } // end of recognize func
 
     private fun showRecognizedText(){
-        var textToShow = StringBuilder()
+        val textToShow = StringBuilder()
 
         if (tesseractAccuracy>=mlKitAccuracy && tesseractAccuracy>=gVisionAccuracy){
             textToShow.append(tesseractText)

@@ -56,4 +56,8 @@
     <string name="me">Abanoub Hanna</string>
     <string name="twitter">\@AbanoubHA | X (Twitter)</string>
     <string name="facebook">Abanoub Hanna | Facebook</string>
+    <string name="arabicOrEnglishOrBoth">The image contains text in</string>
+    <string name="arabic">Arabic</string>
+    <string name="english">English</string>
+    <string name="both">Arabic+English</string>
 </resources>
