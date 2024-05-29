@@ -475,30 +475,33 @@ class MainActivity : AppCompatActivity() {
         googleVisionOCR(bmp)
         googleMLKitOCR(bmp)
 
+    } // end of recognize func
+
+    private fun showRecognizedText(){
+        var textToShow = StringBuilder()
+
         if (tesseractAccuracy>=mlKitAccuracy && tesseractAccuracy>=gVisionAccuracy){
-            binding.resultTextView.postOnAnimation {
-                binding.resultTextView.text = HtmlCompat.fromHtml(
-                    tesseractText,
-                    HtmlCompat.FROM_HTML_MODE_LEGACY
-                )
-                binding.resultTextView.visibility = View.VISIBLE
-            }
+            textToShow.append(tesseractText)
         } else if (mlKitAccuracy>=tesseractAccuracy&&mlKitAccuracy>=gVisionAccuracy){
-            binding.resultTextView.postOnAnimation {
-                binding.resultTextView.text = HtmlCompat.fromHtml(
-                    mlKitText,
-                    HtmlCompat.FROM_HTML_MODE_LEGACY
-                )
-                binding.resultTextView.visibility = View.VISIBLE
-            }
+            textToShow.append(mlKitText)
         } else { // gVisionAccuracy>=tesseractAccuracy&&gVisionAccuracy>=mlKitAccuracy
-            binding.resultTextView.postOnAnimation {
-                binding.resultTextView.text = HtmlCompat.fromHtml(
-                    gVisionText,
-                    HtmlCompat.FROM_HTML_MODE_LEGACY
-                )
-                binding.resultTextView.visibility = View.VISIBLE
-            }
+            textToShow.append(gVisionText)
+        }
+
+        // TODO: remove it later
+        textToShow.append("Google Vision:<br/>$gVisionText<br/>")
+        textToShow.append("ML Kit:<br/>$mlKitText<br/>")
+        textToShow.append("Tesseract:<br/>$tesseractText<br/>")
+        textToShow.append("Google Vision Accuracy: $gVisionAccuracy<br/>")
+        textToShow.append("ML Kit Accuracy: $mlKitAccuracy<br/>")
+        textToShow.append("Tesseract Accuracy: $tesseractAccuracy<br/>")
+
+        binding.resultTextView.postOnAnimation {
+            binding.resultTextView.text = HtmlCompat.fromHtml(
+                textToShow.toString(),
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
+            binding.resultTextView.visibility = View.VISIBLE
         }
 
         binding.scroll.post {
@@ -508,8 +511,7 @@ class MainActivity : AppCompatActivity() {
         binding.progressbar.postOnAnimation {
             binding.progressbar.visibility = View.GONE
         }
-
-    } // end of recognize func
+    }
 
     private fun tesseractOCR(b: Bitmap) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -604,11 +606,14 @@ class MainActivity : AppCompatActivity() {
             baseAPI.recycle()
 
             withContext(Dispatchers.Main) {
-                binding.resultTextView.text = HtmlCompat.fromHtml(
-                    recognizedText.toString(),
-                    HtmlCompat.FROM_HTML_MODE_LEGACY
-                )
+                tesseractText = recognizedText.toString()
+//                binding.resultTextView.text = HtmlCompat.fromHtml(
+//                    recognizedText.toString(),
+//                    HtmlCompat.FROM_HTML_MODE_LEGACY
+//                )
             }
+
+            showRecognizedText()
 
         } // IO Coroutine
     } // tesseractOCR
