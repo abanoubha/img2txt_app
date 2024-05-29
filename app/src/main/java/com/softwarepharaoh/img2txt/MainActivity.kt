@@ -51,7 +51,6 @@ import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
 
-    private var gVisionAccuracy = 0
     private var mlKitAccuracy = 0
     private var gText = ""
     private val mlKitTextWConfidence = mutableMapOf<String, Int>()
@@ -745,7 +744,6 @@ class MainActivity : AppCompatActivity() {
                 recognizedText.append(block.value.toString(), ' ')
             }
 
-            gVisionAccuracy = 70 // high number for now, until i figure out how to get meanConfidence
             gText = recognizedText.toString()
             showRecognizedText()
         } else {
