@@ -11,6 +11,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
+import android.text.Editable
 import android.util.SparseArray
 import android.view.Menu
 import android.view.MenuItem
@@ -99,7 +100,7 @@ class MainActivity : AppCompatActivity() {
 
             } else {
                 // An error occurred.
-                "Error: ${result.error}".also { binding.resultTextView.text = it }
+                "Error: ${result.error}".also { binding.resultTextView.setText(it) }
             }
         }
 
@@ -489,7 +490,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun recognize(languages: String) {
-        binding.resultTextView.text = ""
+        binding.resultTextView.setText("")
 
         binding.progressbar.postOnAnimation {
             binding.progressbar.visibility = View.VISIBLE
@@ -505,9 +506,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun showRecognizedText() {
         binding.resultTextView.postOnAnimation {
-            binding.resultTextView.text = HtmlCompat.fromHtml(
-                gText,
-                HtmlCompat.FROM_HTML_MODE_LEGACY
+            binding.resultTextView.setText(
+                HtmlCompat.fromHtml(
+                    gText,
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
             )
             binding.resultTextView.visibility = View.VISIBLE
         }
@@ -546,7 +549,7 @@ class MainActivity : AppCompatActivity() {
 
                 withContext(Dispatchers.Main) {
                     binding.resultTextView.postOnAnimation {
-                        binding.resultTextView.text = "Could not run OCR process (TESS_ERR_0)"
+                        binding.resultTextView.setText("Could not run OCR process (TESS_ERR_0)")
                     }
                 }
                 return@launch
@@ -569,7 +572,7 @@ class MainActivity : AppCompatActivity() {
 
                 withContext(Dispatchers.Main) {
                     binding.resultTextView.postOnAnimation {
-                        binding.resultTextView.text = recognizedText.toString()
+                        binding.resultTextView.setText(recognizedText.toString())
                     }
                 }
 
@@ -581,7 +584,7 @@ class MainActivity : AppCompatActivity() {
 
                 withContext(Dispatchers.Main) {
                     binding.resultTextView.postOnAnimation {
-                        binding.resultTextView.text = recognizedText.toString()
+                        binding.resultTextView.setText(recognizedText.toString())
                     }
                     showDialogNotice(getString(R.string.conf_notice))
                 }
@@ -637,9 +640,11 @@ class MainActivity : AppCompatActivity() {
 
             withContext(Dispatchers.Main) {
                 binding.resultTextView.postOnAnimation {
-                    binding.resultTextView.text = HtmlCompat.fromHtml(
-                        recognizedText.toString(),
-                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    binding.resultTextView.setText(
+                        HtmlCompat.fromHtml(
+                            recognizedText.toString(),
+                            HtmlCompat.FROM_HTML_MODE_LEGACY
+                        )
                     )
                     binding.resultTextView.visibility = View.VISIBLE
                 }
