@@ -683,7 +683,7 @@ class MainActivity : AppCompatActivity() {
                         recognizedText.append(line.text)
 
                         for (element in line.elements) {
-                            mlKitTextWConfidence[element.text] = element.confidence.toInt()
+                            mlKitTextWConfidence[element.text] = (element.confidence * 100).toInt()
 //                            val elementText = element.text
 //                            val elementCornerPoints = element.cornerPoints
 //                            val elementFrame = element.boundingBox
@@ -692,8 +692,12 @@ class MainActivity : AppCompatActivity() {
                     } // lines
                 }
 
-                // TODO: use accurate meanConfidence
-                mlKitAccuracy = 70
+                mlKitAccuracy = if (mlKitTextWConfidence.isNotEmpty()){
+                    mlKitTextWConfidence.values.sum() / mlKitTextWConfidence.size
+                } else {
+                    0
+                }
+
                 mlKitText = recognizedText.toString()
             }
             .addOnFailureListener { _ ->
