@@ -52,8 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     private var gVisionAccuracy = 0
     private var mlKitAccuracy = 0
-    private var gVisionText = ""
-    private var mlKitText = ""
+    private var gText = ""
     private val mlKitTextWConfidence = mutableMapOf<String, Int>()
 
     private lateinit var bmp: Bitmap
@@ -499,23 +498,15 @@ class MainActivity : AppCompatActivity() {
         if (languages === "eng") {
             latinOCR()
         } else {
-            tesseractOCR(bmp)
+            tesseractOCR(bmp, languages)
         }
 
     } // end of recognize func
 
     private fun showRecognizedText(){
-        val textToShow = StringBuilder()
-
-        if (mlKitAccuracy>=gVisionAccuracy){
-            textToShow.append(mlKitText)
-        } else {
-            textToShow.append(gVisionText)
-        }
-
         binding.resultTextView.postOnAnimation {
             binding.resultTextView.text = HtmlCompat.fromHtml(
-                textToShow.toString(),
+                gText,
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
             binding.resultTextView.visibility = View.VISIBLE
@@ -530,7 +521,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun tesseractOCR(b: Bitmap) {
+    private fun tesseractOCR(b: Bitmap, lang: String) {
         CoroutineScope(Dispatchers.IO).launch {
             baseAPI = TessBaseAPI()
             baseAPI.pageSegMode = TessBaseAPI.PageSegMode.PSM_AUTO_OSD
@@ -545,7 +536,7 @@ class MainActivity : AppCompatActivity() {
 
             val initialized = baseAPI.init(
                 dataPath,
-                "ara+eng",
+                lang,
                 TessBaseAPI.OEM_LSTM_ONLY
             ) // mean conf = 77, 70, 83
 
@@ -641,43 +632,12 @@ class MainActivity : AppCompatActivity() {
                     binding.progressbar.visibility = View.GONE
                 }
             }
-
-
-
         } // IO Coroutine
     } // tesseractOCR
 
+    // use ML Kit, if not found, use Google Vision, if not found, use tesseract
     private fun latinOCR(){
-        googleVisionOCR(bmp)
-        googleMLKitOCR(bmp)
-        showRecognizedText()
-    }
-
-    // use old Google Vision local API
-    private fun googleVisionOCR(b: Bitmap) {
-        val textRecognizer: TextRecognizer = TextRecognizer.Builder(applicationContext).build()
-        if (textRecognizer.isOperational) {
-            val frame: Frame = Frame.Builder().setBitmap(b).build()
-            val items: SparseArray<TextBlock> = textRecognizer.detect(frame)
-            val recognizedText = StringBuilder()
-
-            for (i in 0 until items.size()) {
-                val block: TextBlock = items.valueAt(i)
-                recognizedText.append(block.value.toString(), ' ')
-            }
-
-            gVisionAccuracy = 70 // high number for now, until i figure out how to get meanConfidence
-            gVisionText = recognizedText.toString()
-        } else {
-            gVisionAccuracy = 0
-        }
-
-    } // googleVisionOCR
-
-    // use modern Google ML Kit local API
-    // implementation 'com.google.mlkit:text-recognition:17.0.0'
-    private fun googleMLKitOCR(b: Bitmap) {
-        val image = InputImage.fromBitmap(b, 0)
+        val image = InputImage.fromBitmap(bmp, 0)
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
         val recognizedText = StringBuilder()
 
@@ -729,15 +689,36 @@ class MainActivity : AppCompatActivity() {
                     0
                 }
 
-                mlKitText = recognizedText.toString()
+                gText = recognizedText.toString()
+                showRecognizedText()
             }
             .addOnFailureListener { _ ->
-                //recognizedText.appendLine(e.message)
-                recognizedText.append("")
-                mlKitAccuracy = 0
+                // use Google Vision
+                googleVisionOCR(bmp)
+            }
+    }
+
+    // use old Google Vision local API
+    private fun googleVisionOCR(b: Bitmap) {
+        val textRecognizer: TextRecognizer = TextRecognizer.Builder(applicationContext).build()
+        if (textRecognizer.isOperational) {
+            val frame: Frame = Frame.Builder().setBitmap(b).build()
+            val items: SparseArray<TextBlock> = textRecognizer.detect(frame)
+            val recognizedText = StringBuilder()
+
+            for (i in 0 until items.size()) {
+                val block: TextBlock = items.valueAt(i)
+                recognizedText.append(block.value.toString(), ' ')
             }
 
-    } // googleMLKitOCR
+            gVisionAccuracy = 70 // high number for now, until i figure out how to get meanConfidence
+            gText = recognizedText.toString()
+            showRecognizedText()
+        } else {
+            tesseractOCR(bmp, "eng")
+        }
+
+    } // googleVisionOCR
 
     companion object {
         // const val IMAGE_GALLERY_REQUEST = 10
