@@ -13,7 +13,7 @@ Install the img2txt app from Google Play:
 - [x] use onActivityResult (modern code)
 - [x] use general/universal openUrl() method/function
 - [x] better way of cropping images
-- [x] fix imageView height
+- [x] share image into IMG2TXT app to extract text from it
 - [x] translations (English & Arabic), default is English
 - [x] About Me
 - [x] ~~rate us on Google Play~~ (removed)
@@ -45,3 +45,4 @@ Install the img2txt app from Google Play:
 - [x] make result/extracted text editable
 - [ ] batch processing (in bulk)
 - [ ] PDF -> Images.foreach(ocr)
+- [ ] expose more functions to Java : cpp files in `tesseract4android/src/main/cpp/tesseract` and java files in `tesseract4android/src/main/java/com/googlecode/tesseract/android` must be modified/added.
