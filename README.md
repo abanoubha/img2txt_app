@@ -33,6 +33,9 @@ Install the img2txt app from Google Play:
 - [x] show alert/notice if the mean_confidence of result text is less than 60%
 - [x] show thresholded/cleaned image (created by Tesseract)
 - [x] show bounding rectangles/boxes around each recognized word
+- [x] on-device Tesseract OCR (English & Arabic models)
+- [x] on-device Google vision API (latin scripted languages)
+- [x] on-device ML Kit (latin scripted languages)
 - [x] in case of Arabic language or both (Arabic+English), use Tesseract OCR
 - [x] __fallback strategy__ in case of English language is ML Kit -> Google Vision -> TesseractOCR
 - [x] color-coded confidence/accuracy of the result text from ML Kit & Tesseract OCR
