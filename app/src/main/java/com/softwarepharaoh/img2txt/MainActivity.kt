@@ -282,7 +282,7 @@ class MainActivity : AppCompatActivity() {
             deleteAllPhotos()
             grabImage.launch("image/*")
             return true
-        } else if (id == R.id.info){
+        } else if (id == R.id.info) {
             startActivity(Intent(this, InfoActivity::class.java))
             return true
         }
@@ -503,7 +503,7 @@ class MainActivity : AppCompatActivity() {
 
     } // end of recognize func
 
-    private fun showRecognizedText(){
+    private fun showRecognizedText() {
         binding.resultTextView.postOnAnimation {
             binding.resultTextView.text = HtmlCompat.fromHtml(
                 gText,
@@ -612,13 +612,13 @@ class MainActivity : AppCompatActivity() {
                     recognizedText.append("<span style='color:purple;'>")
                     recognizedText.append(word)
                     recognizedText.append("</span> ")
-                } else if (acc > 50){
+                } else if (acc > 50) {
                     recognizedText.append("<span style='color:red;'>")
                     recognizedText.append(word)
                     recognizedText.append("</span> ")
                 } // accuracy less than 50 -> do not show them
 
-                if (iter.isAtFinalElement(lineLevel,level)){
+                if (iter.isAtFinalElement(lineLevel, level)) {
                     recognizedText.append("<br/>")
                 }
 
@@ -656,7 +656,7 @@ class MainActivity : AppCompatActivity() {
     } // tesseractOCR
 
     // use ML Kit, if not found, use Google Vision, if not found, use tesseract
-    private fun latinOCR(){
+    private fun latinOCR() {
         val image = InputImage.fromBitmap(bmp, 0)
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
         val recognizedText = StringBuilder()
@@ -695,7 +695,7 @@ class MainActivity : AppCompatActivity() {
                                 recognizedText.append("<span style='color:purple;'>")
                                 recognizedText.append(word)
                                 recognizedText.append("</span> ")
-                            } else if (acc > 50){
+                            } else if (acc > 50) {
                                 recognizedText.append("<span style='color:red;'>")
                                 recognizedText.append(word)
                                 recognizedText.append("</span> ")
@@ -712,7 +712,7 @@ class MainActivity : AppCompatActivity() {
 
                 updateImageView()
 
-                mlKitAccuracy = if (mlKitTextWConfidence.isNotEmpty()){
+                mlKitAccuracy = if (mlKitTextWConfidence.isNotEmpty()) {
                     mlKitTextWConfidence.values.sum() / mlKitTextWConfidence.size
                 } else {
                     0
