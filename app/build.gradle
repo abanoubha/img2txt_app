@@ -44,6 +44,9 @@ android {
 }
 
 dependencies {
+    // old Google vision
+    implementation "com.google.android.gms:play-services-vision:20.1.3"
+
 //    implementation 'cz.adaptech:tesseract4android:4.1.1'
 //    implementation 'cz.adaptech.tesseract4android:tesseract4android:4.4.0'
     // better by 4.89% to 6.36% ref : https://docs.google.com/spreadsheets/d/1MQuBcowushPIvi_4tHi_iVYOtGJlo_elSQ5At9KdDF8/edit
