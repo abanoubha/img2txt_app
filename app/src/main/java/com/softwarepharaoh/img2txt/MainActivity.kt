@@ -502,6 +502,8 @@ class MainActivity : AppCompatActivity() {
         textToShow.append("$tesseractTextWConfidence")
         textToShow.append("<br/>-------<br/>")
         textToShow.append("$gVisionTextWConfidence")
+        textToShow.append("<br/>-------<br/>")
+        textToShow.append("$mlKitTextWConfidence")
 
         binding.resultTextView.postOnAnimation {
             binding.resultTextView.text = HtmlCompat.fromHtml(
@@ -664,6 +666,10 @@ class MainActivity : AppCompatActivity() {
         val image = InputImage.fromBitmap(b, 0)
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
         val recognizedText = StringBuilder()
+
+        // remove info of old/previous image
+        mlKitTextWConfidence.clear()
+
         val result = recognizer.process(image)
             .addOnSuccessListener { visionText ->
                 for (block in visionText.textBlocks) {
@@ -676,11 +682,12 @@ class MainActivity : AppCompatActivity() {
 //                        val lineFrame = line.boundingBox
                         recognizedText.append(line.text)
 
-//                        for (element in line.elements) {
+                        for (element in line.elements) {
+                            mlKitTextWConfidence[element.text] = element.confidence.toInt()
 //                            val elementText = element.text
 //                            val elementCornerPoints = element.cornerPoints
 //                            val elementFrame = element.boundingBox
-//                        } // elements
+                        } // elements
 
                     } // lines
                 }
