@@ -36,5 +36,6 @@ Install the img2txt app from Google Play:
 - [x] in case of Arabic language or both (Arabic+English), use Tesseract OCR
 - [x] __fallback strategy__ in case of English language is ML Kit -> Google Vision -> TesseractOCR
 - [x] color-coded confidence/accuracy of the result text from ML Kit & Tesseract OCR
+- [x] prompt the app user to choose the language of text on the image before processing it
 - [ ] batch processing (in bulk)
 - [ ] PDF -> Images.foreach(ocr)
