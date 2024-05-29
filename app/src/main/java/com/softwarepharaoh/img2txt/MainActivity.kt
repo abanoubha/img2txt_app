@@ -56,6 +56,9 @@ class MainActivity : AppCompatActivity() {
     private var tesseractText = ""
     private var gVisionText = ""
     private var mlKitText = ""
+    private val tesseractTextWConfidence = mutableMapOf<String, Int>()
+    private val gVisionTextWConfidence = mutableMapOf<String, Int>()
+    private val mlKitTextWConfidence = mutableMapOf<String, Int>()
 
     private lateinit var bmp: Bitmap
     private lateinit var cameraPermission: Array<String>
@@ -495,6 +498,8 @@ class MainActivity : AppCompatActivity() {
         textToShow.append("Google Vision Accuracy: $gVisionAccuracy<br/>")
         textToShow.append("ML Kit Accuracy: $mlKitAccuracy<br/>")
         textToShow.append("Tesseract Accuracy: $tesseractAccuracy<br/>")
+        textToShow.append("<br/>-------<br/>")
+        textToShow.append("$tesseractTextWConfidence")
 
         binding.resultTextView.postOnAnimation {
             binding.resultTextView.text = HtmlCompat.fromHtml(
@@ -585,18 +590,23 @@ class MainActivity : AppCompatActivity() {
             iter.begin()
 
             do {
-                if (iter.confidence(level) > 90) {
-                    recognizedText.append(iter.getUTF8Text(level))
+                val word: String = iter.getUTF8Text(level)
+                val acc: Int = iter.confidence(level).toInt()
+
+                if (acc > 90) {
+                    recognizedText.append(word)
                     recognizedText.append(" ")
-                } else if (iter.confidence(level) > 80) {
+                } else if (acc > 80) {
                     recognizedText.append("<span style='color:purple;'>")
-                    recognizedText.append(iter.getUTF8Text(level))
+                    recognizedText.append(word)
                     recognizedText.append("</span> ")
                 } else { // accuracy less than 80
                     recognizedText.append("<span style='color:red;'>")
-                    recognizedText.append(iter.getUTF8Text(level))
+                    recognizedText.append(word)
                     recognizedText.append("</span> ")
                 }
+
+                tesseractTextWConfidence[word] = acc
 
             } while (iter.next(level))
 
