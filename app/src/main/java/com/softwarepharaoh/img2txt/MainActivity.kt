@@ -589,6 +589,9 @@ class MainActivity : AppCompatActivity() {
             val level = TessBaseAPI.PageIteratorLevel.RIL_WORD
             iter.begin()
 
+            // remove old values if exists
+            tesseractTextWConfidence.clear()
+
             do {
                 val word: String = iter.getUTF8Text(level)
                 val acc: Int = iter.confidence(level).toInt()
@@ -642,9 +645,9 @@ class MainActivity : AppCompatActivity() {
 
             gVisionAccuracy = 70 // high number for now, until i figure out how to get meanConfidence
             gVisionText = recognizedText.toString()
+        } else {
+            gVisionAccuracy = 0
         }
-
-        gVisionAccuracy = 0
 
     } // googleVisionOCR
 
