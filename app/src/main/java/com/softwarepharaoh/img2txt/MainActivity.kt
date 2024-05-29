@@ -500,6 +500,8 @@ class MainActivity : AppCompatActivity() {
         textToShow.append("Tesseract Accuracy: $tesseractAccuracy<br/>")
         textToShow.append("<br/>-------<br/>")
         textToShow.append("$tesseractTextWConfidence")
+        textToShow.append("<br/>-------<br/>")
+        textToShow.append("$gVisionTextWConfidence")
 
         binding.resultTextView.postOnAnimation {
             binding.resultTextView.text = HtmlCompat.fromHtml(
@@ -638,9 +640,14 @@ class MainActivity : AppCompatActivity() {
             val frame: Frame = Frame.Builder().setBitmap(b).build()
             val items: SparseArray<TextBlock> = textRecognizer.detect(frame)
             val recognizedText = StringBuilder()
+
+            // remove previous image's data
+            gVisionTextWConfidence.clear()
+
             for (i in 0 until items.size()) {
                 val block: TextBlock = items.valueAt(i)
                 recognizedText.append(block.value.toString(), ' ')
+                gVisionTextWConfidence[block.value.toString()] = 55
             }
 
             gVisionAccuracy = 70 // high number for now, until i figure out how to get meanConfidence
