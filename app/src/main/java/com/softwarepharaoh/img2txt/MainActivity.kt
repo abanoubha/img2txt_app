@@ -640,7 +640,7 @@ class MainActivity : AppCompatActivity() {
                 recognizedText.append(block.value.toString(), ' ')
             }
 
-            gVisionAccuracy = 99 // high number for now, until i figure out how to get meanConfidence
+            gVisionAccuracy = 70 // high number for now, until i figure out how to get meanConfidence
             gVisionText = recognizedText.toString()
         }
 
