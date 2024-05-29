@@ -686,6 +686,7 @@ class MainActivity : AppCompatActivity() {
 //                        val lineCornerPoints = line.cornerPoints
 //                        val lineFrame = line.boundingBox
                         recognizedText.append(line.text)
+                        recognizedText.append("<br/>")
 
                         for (element in line.elements) {
                             mlKitTextWConfidence[element.text] = (element.confidence * 100).toInt()
