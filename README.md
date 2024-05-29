@@ -2,8 +2,25 @@
 
 A free opensource Android app to extract text from images using OCR technology.
 
+- works offline (without Internet access)
 - app size 42 MB
 - works on all versions of Android; from Android 6 up to Android 14 (the latest version release)
+- get image from __gallery__ or from __Camera__ for extracting text
+- crop image before OCR processing
+- share image into IMG2TXT app to extract text from it
+- app UI supports Arabic & English
+- app supports extracting Arabic & English languages
+- app supports extracting Arabic+English text from the same image
+- Use three OCR engines (ML Kit -> Google Vision -> Tesseract OCR)
+- color-coded confidence/accuracy extracted text
+  - +90% -> white/black
+  - 80-90% -> purple
+  - 50-80% -> red
+  - -50% -> no shown (discarded)
+- let the user choose the text language before processing
+- show the newlines in the result text
+- ability to edit extracted text
+- ability to copy extracted text
 
 Install the img2txt app from Google Play:  
 <https://play.google.com/store/apps/details?id=com.softwarepharaoh.img2txt>
