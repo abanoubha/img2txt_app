@@ -38,6 +38,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.googlecode.leptonica.android.WriteFile
 import com.googlecode.tesseract.android.ResultIterator
 import com.googlecode.tesseract.android.TessBaseAPI
 import com.softwarepharaoh.img2txt.databinding.ActivityMainBinding
@@ -553,6 +554,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             baseAPI.setImage(b)
+
+            //show native thresholded image
+            bmp = WriteFile.writeBitmap(baseAPI.thresholdedImage)
+            withContext(Dispatchers.Main) {
+                updateImageView()
+            }
 
             val recognizedText = StringBuilder()
 
