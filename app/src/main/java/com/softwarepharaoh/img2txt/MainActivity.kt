@@ -50,14 +50,10 @@ import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
 
-    private var tesseractAccuracy = 0
     private var gVisionAccuracy = 0
     private var mlKitAccuracy = 0
-    private var tesseractText = ""
     private var gVisionText = ""
     private var mlKitText = ""
-    private val tesseractTextWConfidence = mutableMapOf<String, Int>()
-    private val gVisionTextWConfidence = mutableMapOf<String, Int>()
     private val mlKitTextWConfidence = mutableMapOf<String, Int>()
 
     private lateinit var bmp: Bitmap
@@ -99,9 +95,9 @@ class MainActivity : AppCompatActivity() {
                 binding.resultTextView.visibility = View.GONE
                 updateImageView()
                 // get languages of the paper/image
-                val languages = getLanguages()
-                recognize(languages)
-                deleteAllPhotos()
+                getLanguages()
+                // run ocr after this ⬆
+
             } else {
                 // An error occurred.
                 "Error: ${result.error}".also { binding.resultTextView.text = it }
@@ -175,9 +171,7 @@ class MainActivity : AppCompatActivity() {
 
     } // onCreate
 
-    private fun getLanguages(): String {
-        var langs: String = ""
-
+    private fun getLanguages() {
         val builder = AlertDialog.Builder(this@MainActivity)
 
         builder.setTitle(R.string.arabicOrEnglishOrBoth)
@@ -190,16 +184,17 @@ class MainActivity : AppCompatActivity() {
 
         builder.setItems(items) { _, which ->
             when (which) {
-                0 -> langs = "ara"
-                1 -> langs = "eng"
-                2 -> langs = "ara+eng"
+                0 -> recognize("ara")
+                1 -> recognize("eng")
+                2 -> recognize("ara+eng")
             }
         }
 
         val dialog = builder.create()
         dialog.show()
 
-        return langs
+        // clean up
+        deleteAllPhotos()
     }
 
     private fun updateImageView() {
@@ -502,8 +497,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (languages === "eng") {
-            googleVisionOCR(bmp)
-            googleMLKitOCR(bmp)
+            latinOCR()
         } else {
             tesseractOCR(bmp)
         }
@@ -513,28 +507,11 @@ class MainActivity : AppCompatActivity() {
     private fun showRecognizedText(){
         val textToShow = StringBuilder()
 
-        if (tesseractAccuracy>=mlKitAccuracy && tesseractAccuracy>=gVisionAccuracy){
-            textToShow.append(tesseractText)
-        } else if (mlKitAccuracy>=tesseractAccuracy&&mlKitAccuracy>=gVisionAccuracy){
+        if (mlKitAccuracy>=gVisionAccuracy){
             textToShow.append(mlKitText)
-        } else { // gVisionAccuracy>=tesseractAccuracy&&gVisionAccuracy>=mlKitAccuracy
+        } else {
             textToShow.append(gVisionText)
         }
-
-        // TODO: remove it later
-        textToShow.append("<br/>-------<br/>")
-        textToShow.append("Google Vision:<br/>$gVisionText<br/>")
-        textToShow.append("ML Kit:<br/>$mlKitText<br/>")
-        textToShow.append("Tesseract:<br/>$tesseractText<br/>")
-        textToShow.append("Google Vision Accuracy: $gVisionAccuracy<br/>")
-        textToShow.append("ML Kit Accuracy: $mlKitAccuracy<br/>")
-        textToShow.append("Tesseract Accuracy: $tesseractAccuracy<br/>")
-        textToShow.append("<br/>-------<br/>")
-        textToShow.append("$tesseractTextWConfidence")
-        textToShow.append("<br/>-------<br/>")
-        textToShow.append("$gVisionTextWConfidence")
-        textToShow.append("<br/>-------<br/>")
-        textToShow.append("$mlKitTextWConfidence")
 
         binding.resultTextView.postOnAnimation {
             binding.resultTextView.text = HtmlCompat.fromHtml(
@@ -580,7 +557,6 @@ class MainActivity : AppCompatActivity() {
                     binding.resultTextView.postOnAnimation {
                         binding.resultTextView.text = "Could not run OCR process (TESS_ERR_0)"
                     }
-                    tesseractAccuracy = 1
                 }
                 return@launch
             }
@@ -598,14 +574,9 @@ class MainActivity : AppCompatActivity() {
                     binding.resultTextView.postOnAnimation {
                         binding.resultTextView.text = recognizedText.toString()
                     }
-                    tesseractAccuracy = 1
                 }
 
                 return@launch
-            }
-
-            withContext(Dispatchers.Main) {
-                tesseractAccuracy = baseAPI.meanConfidence()
             }
 
             if (baseAPI.meanConfidence() < 60) {
@@ -624,9 +595,6 @@ class MainActivity : AppCompatActivity() {
             val lineLevel = TessBaseAPI.PageIteratorLevel.RIL_TEXTLINE
             val level = TessBaseAPI.PageIteratorLevel.RIL_WORD
             iter.begin()
-
-            // remove old values if exists
-            tesseractTextWConfidence.clear()
 
             do {
                 val word: String = iter.getUTF8Text(level)
@@ -649,8 +617,6 @@ class MainActivity : AppCompatActivity() {
                     recognizedText.append("<br/>")
                 }
 
-                tesseractTextWConfidence[word] = acc
-
             } while (iter.next(level))
 
             // from docs : "The returned iterator must be deleted after use."
@@ -659,17 +625,33 @@ class MainActivity : AppCompatActivity() {
             baseAPI.recycle()
 
             withContext(Dispatchers.Main) {
-                tesseractText = recognizedText.toString()
-//                binding.resultTextView.text = HtmlCompat.fromHtml(
-//                    recognizedText.toString(),
-//                    HtmlCompat.FROM_HTML_MODE_LEGACY
-//                )
+                binding.resultTextView.postOnAnimation {
+                    binding.resultTextView.text = HtmlCompat.fromHtml(
+                        recognizedText.toString(),
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                    binding.resultTextView.visibility = View.VISIBLE
+                }
+
+                binding.scroll.post {
+                    binding.scroll.smoothScrollTo(0, binding.resultTextView.top)
+                }
+
+                binding.progressbar.postOnAnimation {
+                    binding.progressbar.visibility = View.GONE
+                }
             }
 
-            showRecognizedText()
+
 
         } // IO Coroutine
     } // tesseractOCR
+
+    private fun latinOCR(){
+        googleVisionOCR(bmp)
+        googleMLKitOCR(bmp)
+        showRecognizedText()
+    }
 
     // use old Google Vision local API
     private fun googleVisionOCR(b: Bitmap) {
@@ -679,13 +661,9 @@ class MainActivity : AppCompatActivity() {
             val items: SparseArray<TextBlock> = textRecognizer.detect(frame)
             val recognizedText = StringBuilder()
 
-            // remove previous image's data
-            gVisionTextWConfidence.clear()
-
             for (i in 0 until items.size()) {
                 val block: TextBlock = items.valueAt(i)
                 recognizedText.append(block.value.toString(), ' ')
-                gVisionTextWConfidence[block.value.toString()] = 55
             }
 
             gVisionAccuracy = 70 // high number for now, until i figure out how to get meanConfidence
