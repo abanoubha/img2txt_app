@@ -665,6 +665,14 @@ class MainActivity : AppCompatActivity() {
         // remove info of old/previous image
         mlKitTextWConfidence.clear()
 
+        bmp = bmp.copy(Bitmap.Config.RGB_565, true)
+        val canvas = Canvas(bmp)
+        val paint = Paint()
+        paint.alpha = 0xA0
+        paint.color = Color.BLUE
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 1f
+
         val result = recognizer.process(image)
             .addOnSuccessListener { visionText ->
                 for (block in visionText.textBlocks) {
@@ -696,13 +704,14 @@ class MainActivity : AppCompatActivity() {
 
                             mlKitTextWConfidence[word] = acc
 
-//                            val elementText = element.text
-//                            val elementCornerPoints = element.cornerPoints
-//                            val elementFrame = element.boundingBox
+                            element.boundingBox?.let { canvas.drawRect(it, paint) }
+
                         } // elements
 
                     } // lines
                 }
+
+                updateImageView()
 
                 mlKitAccuracy = if (mlKitTextWConfidence.isNotEmpty()){
                     mlKitTextWConfidence.values.sum() / mlKitTextWConfidence.size
