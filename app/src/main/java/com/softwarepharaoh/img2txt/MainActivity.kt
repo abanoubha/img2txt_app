@@ -590,6 +590,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             val iter: ResultIterator = baseAPI.resultIterator
+            val lineLevel = TessBaseAPI.PageIteratorLevel.RIL_TEXTLINE
             val level = TessBaseAPI.PageIteratorLevel.RIL_WORD
             iter.begin()
 
@@ -612,6 +613,10 @@ class MainActivity : AppCompatActivity() {
                     recognizedText.append(word)
                     recognizedText.append("</span> ")
                 } // accuracy less than 50 -> do not show them
+
+                if (iter.isAtFinalElement(lineLevel,level)){
+                    recognizedText.append("<br/>")
+                }
 
                 tesseractTextWConfidence[word] = acc
 
