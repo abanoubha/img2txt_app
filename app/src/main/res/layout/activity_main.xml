@@ -71,13 +71,14 @@
                 android:paddingTop="30dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="8dp"
-                android:textColor="?attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
                 app:drawableEndCompat="@drawable/ic_bulb" />
 
             <TextView
                 android:id="@+id/colorCodeDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="?android:attr/textColorHint"
                 android:text="@string/color_codes"
                 android:paddingLeft="16dp"
                 android:paddingTop="8dp"
