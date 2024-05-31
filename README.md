@@ -24,6 +24,40 @@ A free opensource Android app to extract text from images using OCR technology.
 Install the img2txt app from Google Play:  
 <https://play.google.com/store/apps/details?id=com.softwarepharaoh.img2txt>
 
+## documented fix
+
+Google Play : "This App Bundle contains native code, and you've not uploaded debug symbols. We recommend you upload a symbol file to make your crashes and ANRs easier to analyze and debug. Learn More"
+
+How to do that?
+
+1 . in `app/build.gradle` add:
+
+```
+android {
+   ...
+    defaultConfig {
+       ...
+        ndk {
+            debugSymbolLevel 'FULL'
+        }
+    }
+}
+```
+
+2 . go to this path inside your project
+
+```
+cd app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib
+```
+
+3 . compress them all in one file
+
+```
+zip -r symbols.zip .
+```
+
+4 . upload the `symbols.zip` file into Google Play Console/release
+
 ## Tasks
 
 - [x] use onActivityResult (modern code)
