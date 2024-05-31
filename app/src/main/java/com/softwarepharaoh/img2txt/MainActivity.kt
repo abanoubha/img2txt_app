@@ -1,9 +1,17 @@
 package com.softwarepharaoh.img2txt
 
 import android.Manifest
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.ContentValues
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
@@ -11,7 +19,6 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
-import android.text.Editable
 import android.util.SparseArray
 import android.view.Menu
 import android.view.MenuItem
@@ -74,6 +81,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        binding.colorCodeSummary.setOnClickListener {
+            if (binding.colorCodeDetails.visibility == View.GONE) {
+                binding.colorCodeDetails.visibility = View.VISIBLE
+            } else {
+                binding.colorCodeDetails.visibility = View.GONE
+            }
+        }
 
         cropViewOptions = CropImageOptions(
             activityBackgroundColor = Color.BLACK,

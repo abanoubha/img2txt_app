@@ -61,4 +61,18 @@
     <string name="english">English</string>
     <string name="both">Arabic+English</string>
     <string name="submit">Submit</string>
+    <string name="color_codes_summary">
+        <![CDATA[
+        🔴 -49% 🟣 50:79% ⚪⚫ +80%
+        ]]>
+    </string>
+    <string name="color_codes">
+        <![CDATA[
+        Words with color-coded accuracy (OCR confidence):
+        \nthis tells you how confident the app in the identified word.
+        \n-49% -> red 🔴
+        \n50:79% -> purple 🟣
+        \n+80% -> white/black ⚪⚫
+        ]]>
+    </string>
 </resources>

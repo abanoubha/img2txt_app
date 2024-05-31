@@ -61,6 +61,30 @@
                 android:textSize="20sp"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/colorCodeSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/color_codes_summary"
+                android:textSize="18sp"
+                android:paddingLeft="16dp"
+                android:paddingTop="30dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp"
+                android:textColor="?attr/colorAccent"
+                app:drawableEndCompat="@drawable/ic_bulb" />
+
+            <TextView
+                android:id="@+id/colorCodeDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/color_codes"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="30dp"
+                android:visibility="gone"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
