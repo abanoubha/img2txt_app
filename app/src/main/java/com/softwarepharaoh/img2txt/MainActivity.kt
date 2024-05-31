@@ -67,12 +67,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var grabImage: ActivityResultLauncher<String>
     private lateinit var camUri: Uri
     private lateinit var cropImage: ActivityResultLauncher<CropImageContractOptions>
+    private lateinit var cropViewOptions: CropImageOptions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        cropViewOptions = CropImageOptions(
+            activityBackgroundColor = Color.BLACK,
+            initialCropWindowPaddingRatio = 0.2f,
+            cropMenuCropButtonTitle = getString(R.string.submit)
+        )
 
         binding.resultTextView.setTextIsSelectable(true)
 //        binding.resultTextView.text = getString(R.string.main_notice)
@@ -119,10 +126,7 @@ class MainActivity : AppCompatActivity() {
             deleteAllPhotos()
             binding.ocrImage.setImageURI(uri)
             cropImage.launch(
-                CropImageContractOptions(
-                    uri,
-                    CropImageOptions(activityBackgroundColor = Color.BLACK)
-                )
+                CropImageContractOptions(uri, cropViewOptions)
             )
             // cropFun(uri)
         }
@@ -139,10 +143,7 @@ class MainActivity : AppCompatActivity() {
                     deleteAllPhotos()
                     binding.ocrImage.setImageURI(camUri)
                     cropImage.launch(
-                        CropImageContractOptions(
-                            camUri,
-                            CropImageOptions(activityBackgroundColor = Color.BLACK)
-                        )
+                        CropImageContractOptions(camUri, cropViewOptions)
                     )
                     // cropFun(camUri)
                 }
@@ -475,10 +476,7 @@ class MainActivity : AppCompatActivity() {
                 //UCrop.of(receiveUri, photoURI!!).start(this)
                 //CropImage.activity(receiveUri).start(this)
                 cropImage.launch(
-                    CropImageContractOptions(
-                        receiveUri,
-                        CropImageOptions(activityBackgroundColor = Color.BLACK)
-                    )
+                    CropImageContractOptions(receiveUri, cropViewOptions)
                 )
             }
         }

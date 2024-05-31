@@ -61,4 +61,5 @@
     <string name="arabic">العربية</string>
     <string name="english">الإنجليزية</string>
     <string name="both">العربية+الإنجليزية</string>
+    <string name="submit">تقديم</string>
 </resources>
