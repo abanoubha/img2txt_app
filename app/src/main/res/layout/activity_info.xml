@@ -1,84 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
+    android:layout_weight="1"
     tools:context=".InfoActivity">
 
-    <ImageView
-        android:id="@+id/devImage"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginEnd="8dp"
-        android:contentDescription="@string/dev_image"
-        android:src="@drawable/abanoub_hanna"
-        android:scaleType="fitXY" />
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textSize="20sp"
-        android:text="@string/about_me" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/twitterBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/twitter"
-        android:icon="@drawable/ic_twitter"
-        app:icon="@drawable/ic_twitter"/>
+        <ImageView
+            android:id="@+id/devImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/dev_image"
+            android:scaleType="fitXY"
+            android:src="@drawable/abanoub_hanna" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/fbBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/facebook"
-        android:icon="@drawable/ic_facebook"
-        app:icon="@drawable/ic_facebook"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/about_me"
+            android:textSize="20sp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/inBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/linkedin"
-        android:icon="@drawable/ic_linkedin"
-        app:icon="@drawable/ic_linkedin"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/twitterBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_twitter"
+            android:text="@string/twitter"
+            app:icon="@drawable/ic_twitter" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/ytBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/youtube"
-        android:icon="@drawable/ic_youtube"
-        app:icon="@drawable/ic_youtube"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fbBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_facebook"
+            android:text="@string/facebook"
+            app:icon="@drawable/ic_facebook" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/gitBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/github"
-        android:icon="@drawable/ic_github"
-        app:icon="@drawable/ic_github"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/inBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_linkedin"
+            android:text="@string/linkedin"
+            app:icon="@drawable/ic_linkedin" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/telegramBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/telegram"
-        android:icon="@drawable/ic_telegram"
-        app:icon="@drawable/ic_telegram"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ytBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_youtube"
+            android:text="@string/youtube"
+            app:icon="@drawable/ic_youtube" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/gpBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/google_play"
-        android:icon="@drawable/google_play_ic"
-        app:icon="@drawable/google_play_ic"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/gitBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_github"
+            android:text="@string/github"
+            app:icon="@drawable/ic_github" />
 
-</LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/telegramBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_telegram"
+            android:text="@string/telegram"
+            app:icon="@drawable/ic_telegram" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/gpBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/google_play_ic"
+            android:text="@string/google_play"
+            app:icon="@drawable/google_play_ic" />
+
+    </LinearLayout>
+</ScrollView>
