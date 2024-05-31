@@ -13,10 +13,9 @@ A free opensource Android app to extract text from images using OCR technology.
 - app supports extracting Arabic+English text from the same image
 - Use three OCR engines (ML Kit -> Google Vision -> Tesseract OCR)
 - color-coded confidence/accuracy extracted text
-  - +90% -> white/black
-  - 80-90% -> purple
-  - 50-80% -> red
-  - -50% -> no shown (discarded)
+  - +80% -> white/black
+  - 50-79% -> purple
+  - -50% -> red
 - let the user choose the text language before processing
 - show the newlines in the result text
 - ability to edit extracted text
