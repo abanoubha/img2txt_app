@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
             cropImage.launch(
                 CropImageContractOptions(
                     uri,
-                    CropImageOptions(activityBackgroundColor = Color.GRAY)
+                    CropImageOptions(activityBackgroundColor = Color.BLACK)
                 )
             )
             // cropFun(uri)
