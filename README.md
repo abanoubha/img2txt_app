@@ -57,7 +57,6 @@ Install the img2txt app from Google Play:
 - [x] color-coded confidence/accuracy of the result text from ML Kit & Tesseract OCR
 - [x] prompt the app user to choose the language of text on the image before processing it
 - [x] add line breaks (newline) in extracted text (ML Kit & Tesseract OCR)
-- [x] only show words with confidence > 50
 - [x] make result/extracted text editable
 - [x] release [v2.7.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.7.0) on May 29th, 2024
 - [ ] batch processing (in bulk)
