@@ -621,18 +621,18 @@ class MainActivity : AppCompatActivity() {
                 val word: String = iter.getUTF8Text(level)
                 val acc: Int = iter.confidence(level).toInt()
 
-                if (acc > 90) {
+                if (acc > 80) {
                     recognizedText.append(word)
                     recognizedText.append(" ")
-                } else if (acc > 80) {
+                } else if (acc > 50) {
                     recognizedText.append("<span style='color:purple;'>")
                     recognizedText.append(word)
                     recognizedText.append("</span> ")
-                } else if (acc > 50) {
+                } else {
                     recognizedText.append("<span style='color:red;'>")
                     recognizedText.append(word)
                     recognizedText.append("</span> ")
-                } // accuracy less than 50 -> do not show them
+                }
 
                 if (iter.isAtFinalElement(lineLevel, level)) {
                     recognizedText.append("<br/>")
@@ -706,18 +706,18 @@ class MainActivity : AppCompatActivity() {
                             val word = element.text
                             val acc = (element.confidence * 100).toInt()
 
-                            if (acc > 90) {
+                            if (acc > 80) {
                                 recognizedText.append(word)
                                 recognizedText.append(" ")
-                            } else if (acc > 80) {
+                            } else if (acc > 50) {
                                 recognizedText.append("<span style='color:purple;'>")
                                 recognizedText.append(word)
                                 recognizedText.append("</span> ")
-                            } else if (acc > 50) {
+                            } else {
                                 recognizedText.append("<span style='color:red;'>")
                                 recognizedText.append(word)
                                 recognizedText.append("</span> ")
-                            } // accuracy less than 50 -> do not show them
+                            }
 
                             mlKitTextWConfidence[word] = acc
 
