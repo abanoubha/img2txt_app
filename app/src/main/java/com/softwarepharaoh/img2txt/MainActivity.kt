@@ -71,12 +71,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cameraPermission: Array<String>
 
     // private var currentPhotoPath: String? = null
-    private var photoURI: Uri? = null
     private lateinit var binding: ActivityMainBinding
     private lateinit var baseAPI: TessBaseAPI
     private lateinit var takeImage: ActivityResultLauncher<Intent>
     private lateinit var grabImage: ActivityResultLauncher<String>
-    private lateinit var camUri: Uri
+    private lateinit var photoUri: Uri
     private lateinit var cropImage: ActivityResultLauncher<CropImageContractOptions>
     private lateinit var cropViewOptions: CropImageOptions
     // local db
@@ -177,9 +176,9 @@ class MainActivity : AppCompatActivity() {
             ActivityResultCallback { result: ActivityResult ->
                 if (result.resultCode == RESULT_OK) {
                     // deleteAllPhotos()
-                    binding.ocrImage.setImageURI(camUri)
+                    binding.ocrImage.setImageURI(photoUri)
                     cropImage.launch(
-                        CropImageContractOptions(camUri, cropViewOptions)
+                        CropImageContractOptions(photoUri, cropViewOptions)
                     )
                     // cropFun(camUri)
                 }
@@ -192,11 +191,11 @@ class MainActivity : AppCompatActivity() {
                 val values = ContentValues()
                 values.put(MediaStore.Images.Media.TITLE, "New Picture")
                 values.put(MediaStore.Images.Media.DESCRIPTION, "From Camera")
-                camUri = contentResolver.insert(
+                photoUri = contentResolver.insert(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
                 )!!
                 val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, camUri)
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
                 takeImage.launch(cameraIntent)
             } else {
                 showDialogMsg() //if yes see the permission requests
@@ -306,11 +305,11 @@ class MainActivity : AppCompatActivity() {
                 val values = ContentValues()
                 values.put(MediaStore.Images.Media.TITLE, "New Picture")
                 values.put(MediaStore.Images.Media.DESCRIPTION, "From Camera")
-                camUri = contentResolver.insert(
+                photoUri = contentResolver.insert(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
                 )!!
                 val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, camUri)
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
                 takeImage.launch(cameraIntent)
             } else {
                 showDialogMsg() //if yes see the permission requests
@@ -468,8 +467,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun deleteAllPhotos() {
-        if (photoURI != null) {
-            this.contentResolver.delete(photoURI!!, null, null)
+        if (::photoUri.isInitialized) {
+            this.contentResolver.delete(photoUri, null, null)
         }
     }
 
@@ -691,10 +690,8 @@ class MainActivity : AppCompatActivity() {
                     binding.progressbar.visibility = View.GONE
                 }
 
-                if (::camUri.isInitialized){
-                    dbHelper.insertTextAndImageUrl(recognizedText.toString(), camUri.toString()+photoURI.toString())
-                } else {
-                    dbHelper.insertTextAndImageUrl(recognizedText.toString(), photoURI.toString())
+                if (::photoUri.isInitialized){
+                    dbHelper.insertTextAndImageUrl(recognizedText.toString(), photoUri.toString())
                 }
             }
         } // IO Coroutine
@@ -768,10 +765,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 gText = recognizedText.toString()
-                if (::camUri.isInitialized){
-                    dbHelper.insertTextAndImageUrl(gText, camUri.toString()+photoURI.toString())
-                } else {
-                    dbHelper.insertTextAndImageUrl(gText, photoURI.toString())
+                if (::photoUri.isInitialized){
+                    dbHelper.insertTextAndImageUrl(gText, photoUri.toString())
                 }
                 showRecognizedText()
             }
@@ -795,7 +790,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             gText = recognizedText.toString()
-            dbHelper.insertTextAndImageUrl(gText, camUri.toString()+photoURI.toString())
+            if (::photoUri.isInitialized){
+                dbHelper.insertTextAndImageUrl(gText, photoUri.toString())
+            }
             showRecognizedText()
         } else {
             tesseractOCR(bmp, "eng")
