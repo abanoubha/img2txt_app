@@ -88,19 +88,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         dbHelper = DatabaseHelper(applicationContext)
-        // add test data
-        // dbHelper.insertTextAndImageUrl("Sample Text", "http://example.com/image.jpg")
-        // dbHelper.insertTextAndImageUrl("Sample Text #2", "http://example.com/image_2.png")
-        // get all
-        val records: List<History> = dbHelper.getAllRecords()
-//        for (record in records) {
-//            Log.d("Record", "ID: ${record.id}, Text: ${record.text}, Image URL: ${record.imageUrl}")
-//        }
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = HistoryAdapter()
         }
-        (binding.recyclerView.adapter as HistoryAdapter).updateData(records)
+        updateHistoryList()
 
         binding.colorCodeSummary.setOnClickListener {
             if (binding.colorCodeDetails.visibility == View.GONE) {
@@ -206,6 +198,14 @@ class MainActivity : AppCompatActivity() {
         onSharedIntent()
 
     } // onCreate
+
+    private fun updateHistoryList() {
+        val records: List<History> = dbHelper.getAllRecords()
+        // for (record in records) {
+        //    Log.d("Record", "ID: ${record.id}, Text: ${record.text}, Image URL: ${record.imageUrl}")
+        //}
+        (binding.recyclerView.adapter as HistoryAdapter).updateData(records)
+    }
 
     private fun getLanguages() {
         val builder = AlertDialog.Builder(this@MainActivity)
@@ -692,6 +692,7 @@ class MainActivity : AppCompatActivity() {
 
                 if (::photoUri.isInitialized){
                     dbHelper.insertTextAndImageUrl(recognizedText.toString(), photoUri.toString())
+                    updateHistoryList()
                 }
             }
         } // IO Coroutine
@@ -767,6 +768,7 @@ class MainActivity : AppCompatActivity() {
                 gText = recognizedText.toString()
                 if (::photoUri.isInitialized){
                     dbHelper.insertTextAndImageUrl(gText, photoUri.toString())
+                    updateHistoryList()
                 }
                 showRecognizedText()
             }
@@ -792,6 +794,7 @@ class MainActivity : AppCompatActivity() {
             gText = recognizedText.toString()
             if (::photoUri.isInitialized){
                 dbHelper.insertTextAndImageUrl(gText, photoUri.toString())
+                updateHistoryList()
             }
             showRecognizedText()
         } else {
