@@ -90,8 +90,8 @@ class MainActivity : AppCompatActivity() {
 
         dbHelper = DatabaseHelper(applicationContext)
         // add test data
-        dbHelper.insertTextAndImageUrl("Sample Text", "http://example.com/image.jpg")
-        dbHelper.insertTextAndImageUrl("Sample Text #2", "http://example.com/image_2.png")
+        // dbHelper.insertTextAndImageUrl("Sample Text", "http://example.com/image.jpg")
+        // dbHelper.insertTextAndImageUrl("Sample Text #2", "http://example.com/image_2.png")
         // get all
         val records: List<History> = dbHelper.getAllRecords()
 //        for (record in records) {
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
         grabImage = registerForActivityResult(
             ActivityResultContracts.GetContent()
         ) { uri: Uri? ->
-            deleteAllPhotos()
+            // deleteAllPhotos()
             binding.ocrImage.setImageURI(uri)
             cropImage.launch(
                 CropImageContractOptions(uri, cropViewOptions)
@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.galleryBtn.setOnClickListener {
-            deleteAllPhotos()
+            // deleteAllPhotos()
             grabImage.launch("image/*")
         }
 
@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult(),
             ActivityResultCallback { result: ActivityResult ->
                 if (result.resultCode == RESULT_OK) {
-                    deleteAllPhotos()
+                    // deleteAllPhotos()
                     binding.ocrImage.setImageURI(camUri)
                     cropImage.launch(
                         CropImageContractOptions(camUri, cropViewOptions)
@@ -187,7 +187,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.cameraBtn.setOnClickListener {
-            deleteAllPhotos()
+            // deleteAllPhotos()
             if (checkCameraPermission()) {
                 val values = ContentValues()
                 values.put(MediaStore.Images.Media.TITLE, "New Picture")
@@ -690,6 +690,12 @@ class MainActivity : AppCompatActivity() {
                 binding.progressbar.postOnAnimation {
                     binding.progressbar.visibility = View.GONE
                 }
+
+                if (::camUri.isInitialized){
+                    dbHelper.insertTextAndImageUrl(recognizedText.toString(), camUri.toString()+photoURI.toString())
+                } else {
+                    dbHelper.insertTextAndImageUrl(recognizedText.toString(), photoURI.toString())
+                }
             }
         } // IO Coroutine
     } // tesseractOCR
@@ -762,6 +768,11 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 gText = recognizedText.toString()
+                if (::camUri.isInitialized){
+                    dbHelper.insertTextAndImageUrl(gText, camUri.toString()+photoURI.toString())
+                } else {
+                    dbHelper.insertTextAndImageUrl(gText, photoURI.toString())
+                }
                 showRecognizedText()
             }
             .addOnFailureListener { _ ->
@@ -784,6 +795,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             gText = recognizedText.toString()
+            dbHelper.insertTextAndImageUrl(gText, camUri.toString()+photoURI.toString())
             showRecognizedText()
         } else {
             tesseractOCR(bmp, "eng")
