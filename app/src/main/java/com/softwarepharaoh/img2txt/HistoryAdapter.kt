@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
@@ -26,7 +27,12 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         val currentHistory = historyList[position]
-        holder.textView.text = currentHistory.text
+
+        holder.textView.text = HtmlCompat.fromHtml(
+            currentHistory.text,
+            HtmlCompat.FROM_HTML_MODE_COMPACT
+        )
+
         holder.imageView.setImageURI(Uri.parse(currentHistory.imageUrl))
     }
 
