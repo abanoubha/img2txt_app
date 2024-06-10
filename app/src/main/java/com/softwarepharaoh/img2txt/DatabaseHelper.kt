@@ -2,6 +2,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.softwarepharaoh.img2txt.History
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DatabaseConfig.DATABASE_NAME, null, DatabaseConfig.DATABASE_VERSION) {
 
@@ -30,18 +31,25 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DatabaseConfi
         return newRowId
     }
 
-    fun getAllRecords(): List<Map<String, Any>> {
+    fun getAllRecords(): List<History> {
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM ${DatabaseConfig.TABLE_NAME}", null)
-        val result = mutableListOf<Map<String, Any>>()
+        val result = mutableListOf<History>()
 
         if (cursor.moveToFirst()) {
             do {
-                val record = HashMap<String, Any>()
-                record[DatabaseConfig.COLUMN_ID] = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseConfig.COLUMN_ID))
-                record[DatabaseConfig.COLUMN_TEXT] = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConfig.COLUMN_TEXT))
-                record[DatabaseConfig.COLUMN_IMAGE_URL] = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConfig.COLUMN_IMAGE_URL))
-                result.add(record)
+//                val record = HashMap<String, Any>()
+//                record[DatabaseConfig.COLUMN_ID] = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseConfig.COLUMN_ID))
+//                record[DatabaseConfig.COLUMN_TEXT] = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConfig.COLUMN_TEXT))
+//                record[DatabaseConfig.COLUMN_IMAGE_URL] = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConfig.COLUMN_IMAGE_URL))
+//                result.add(record)
+                result.add(
+                    History(
+                        cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseConfig.COLUMN_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConfig.COLUMN_TEXT)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseConfig.COLUMN_IMAGE_URL))
+                    )
+                )
             } while (cursor.moveToNext())
         }
         cursor.close()

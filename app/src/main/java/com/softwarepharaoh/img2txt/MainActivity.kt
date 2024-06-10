@@ -35,6 +35,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
@@ -92,10 +93,15 @@ class MainActivity : AppCompatActivity() {
         dbHelper.insertTextAndImageUrl("Sample Text", "http://example.com/image.jpg")
         dbHelper.insertTextAndImageUrl("Sample Text #2", "http://example.com/image_2.png")
         // get all
-        val records = dbHelper.getAllRecords()
-        for (record in records) {
-            Log.d("Record", "ID: ${record[DatabaseConfig.COLUMN_ID]}, Text: ${record[DatabaseConfig.COLUMN_TEXT]}, Image URL: ${record[DatabaseConfig.COLUMN_IMAGE_URL]}")
+        val records: List<History> = dbHelper.getAllRecords()
+//        for (record in records) {
+//            Log.d("Record", "ID: ${record.id}, Text: ${record.text}, Image URL: ${record.imageUrl}")
+//        }
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = HistoryAdapter()
         }
+        (binding.recyclerView.adapter as HistoryAdapter).updateData(records)
 
         binding.colorCodeSummary.setOnClickListener {
             if (binding.colorCodeDetails.visibility == View.GONE) {
