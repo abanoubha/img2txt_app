@@ -230,7 +230,7 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
 
         // clean up
-        deleteAllPhotos()
+        // deleteAllPhotos()
     }
 
     private fun updateImageView() {
@@ -300,7 +300,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.camera) {
-            deleteAllPhotos()
+            // deleteAllPhotos()
             if (checkCameraPermission()) {
                 val values = ContentValues()
                 values.put(MediaStore.Images.Media.TITLE, "New Picture")
@@ -316,7 +316,7 @@ class MainActivity : AppCompatActivity() {
             }
             return true
         } else if (id == R.id.gallery) {
-            deleteAllPhotos()
+            // deleteAllPhotos()
             grabImage.launch("image/*")
             return true
         } else if (id == R.id.info) {
@@ -462,7 +462,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        deleteAllPhotos()
+        // deleteAllPhotos()
         super.onDestroy()
     }
 
