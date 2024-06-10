@@ -1,5 +1,7 @@
 package com.softwarepharaoh.img2txt
 
+import DatabaseConfig
+import DatabaseHelper
 import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -19,6 +21,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
+import android.util.Log
 import android.util.SparseArray
 import android.view.Menu
 import android.view.MenuItem
@@ -75,12 +78,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var camUri: Uri
     private lateinit var cropImage: ActivityResultLauncher<CropImageContractOptions>
     private lateinit var cropViewOptions: CropImageOptions
+    // local db
+    private lateinit var dbHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        dbHelper = DatabaseHelper(applicationContext)
+        // add test data
+        dbHelper.insertTextAndImageUrl("Sample Text", "http://example.com/image.jpg")
+        dbHelper.insertTextAndImageUrl("Sample Text #2", "http://example.com/image_2.png")
+        // get all
+        val records = dbHelper.getAllRecords()
+        for (record in records) {
+            Log.d("Record", "ID: ${record[DatabaseConfig.COLUMN_ID]}, Text: ${record[DatabaseConfig.COLUMN_TEXT]}, Image URL: ${record[DatabaseConfig.COLUMN_IMAGE_URL]}")
+        }
 
         binding.colorCodeSummary.setOnClickListener {
             if (binding.colorCodeDetails.visibility == View.GONE) {
