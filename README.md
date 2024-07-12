@@ -77,6 +77,7 @@ zip -r symbols.zip .
 - [x] Android 12
 - [x] Android 13
 - [x] Android 14 (SDK 34) ([v2.6.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.6.0))
+- [x] Android 15 (SDK 35)
 - [x] simplify app UI layout
 - [x] new simpler theme
 - [x] show alert/notice if the mean_confidence of result text is less than 60%
