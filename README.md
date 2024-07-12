@@ -77,7 +77,7 @@ zip -r symbols.zip .
 - [x] Android 12
 - [x] Android 13
 - [x] Android 14 (SDK 34) ([v2.6.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.6.0))
-- [x] Android 15 (SDK 35)
+- [x] Android 15 (SDK 35) ([v2.9.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.9.0))
 - [x] simplify app UI layout
 - [x] new simpler theme
 - [x] show alert/notice if the mean_confidence of result text is less than 60%
@@ -95,7 +95,7 @@ zip -r symbols.zip .
 - [x] release [v2.7.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.7.0) on May 29th, 2024
 - [x] customize crop-screen
 - [x] image to text OCR app release [v2.8.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.8.0) on May 31st, 2024 with enhanced user experience and bug fixes.
-- [x] save OCR history (aka : Detailed scanned images history)
+- [x] save OCR history (aka : Detailed scanned images history): [v2.9.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.9.0)
 - [ ] batch processing (in bulk)
 - [ ] PDF -> Images.foreach(ocr)
 - [ ] expose more functions to Java : cpp files in `tesseract4android/src/main/cpp/tesseract` and java files in `tesseract4android/src/main/java/com/googlecode/tesseract/android` must be modified/added.
