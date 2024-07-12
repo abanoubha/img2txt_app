@@ -95,7 +95,7 @@ zip -r symbols.zip .
 - [x] release [v2.7.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.7.0) on May 29th, 2024
 - [x] customize crop-screen
 - [x] image to text OCR app release [v2.8.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.8.0) on May 31st, 2024 with enhanced user experience and bug fixes.
-- [ ] save OCR history (aka : Detailed scanned images history) (WIP)
+- [x] save OCR history (aka : Detailed scanned images history)
 - [ ] batch processing (in bulk)
 - [ ] PDF -> Images.foreach(ocr)
 - [ ] expose more functions to Java : cpp files in `tesseract4android/src/main/cpp/tesseract` and java files in `tesseract4android/src/main/java/com/googlecode/tesseract/android` must be modified/added.
