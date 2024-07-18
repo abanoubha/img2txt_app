@@ -20,7 +20,7 @@ A free opensource Android app to extract text from images using OCR technology.
 - ability to edit extracted text
 - ability to copy extracted text
 
-Install the img2txt app from Google Play:  
+Install the img2txt app from Google Play:
 <https://play.google.com/store/apps/details?id=com.softwarepharaoh.img2txt>
 
 ## documented fix
@@ -57,51 +57,59 @@ zip -r symbols.zip .
 
 4 . upload the `symbols.zip` file into Google Play Console/release
 
-## Tasks
+## Software Versions & Tasks
 
-- [x] use onActivityResult (modern code)
-- [x] use general/universal openUrl() method/function
-- [x] better way of cropping images
-- [x] share image into IMG2TXT app to extract text from it
-- [x] translations (English & Arabic), default is English
-- [x] About Me
-- [x] ~~rate us on Google Play~~ (removed)
-- [x] link to Google Play
-- [x] first opensource version release is v2.5.1 on April 21st, 2024
-- [x] Android 6 (Marshmallow) (SDK 23)
-- [x] Android 7
-- [x] Android 8
-- [x] Android 9
-- [x] Android 10
-- [x] Android 11
-- [x] Android 12
-- [x] Android 13
-- [x] Android 14 (SDK 34) ([v2.6.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.6.0))
-- [x] Android 15 (SDK 35) ([v2.9.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.9.0))
-- [x] simplify app UI layout
-- [x] new simpler theme
-- [x] show alert/notice if the mean_confidence of result text is less than 60%
-- [x] show thresholded/cleaned image (created by Tesseract)
-- [x] show bounding rectangles/boxes around each recognized word
-- [x] on-device Tesseract OCR (English & Arabic models)
-- [x] on-device Google vision API (latin scripted languages)
-- [x] on-device ML Kit (latin scripted languages)
-- [x] in case of Arabic language or both (Arabic+English), use Tesseract OCR
-- [x] __fallback strategy__ in case of English language is ML Kit -> Google Vision -> TesseractOCR
-- [x] color-coded confidence/accuracy of the result text from ML Kit & Tesseract OCR
-- [x] prompt the app user to choose the language of text on the image before processing it
-- [x] add line breaks (newline) in extracted text (ML Kit & Tesseract OCR)
-- [x] make result/extracted text editable
-- [x] release [v2.7.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.7.0) on May 29th, 2024
-- [x] customize crop-screen
-- [x] image to text OCR app release [v2.8.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.8.0) on May 31st, 2024 with enhanced user experience and bug fixes.
-- [x] save OCR history (aka : Detailed scanned images history): [v2.9.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.9.0)
-- [ ] batch processing (in bulk)
-- [ ] PDF -> Images.foreach(ocr)
-- [ ] expose more functions to Java : cpp files in `tesseract4android/src/main/cpp/tesseract` and java files in `tesseract4android/src/main/java/com/googlecode/tesseract/android` must be modified/added.
-- [ ] support Hindi ( Indian language )
-- [ ] support Farsi ( Persian language )
-- [ ] save extracted text as PDF
-- [ ] choose more than one image to OCR
-- [ ] pre-process image with thresholding for more clarity and better results/accuracy/extracted text
-- [ ] Ability to edit image before/after running OCR on it (manual)
+- Old Codebase
+  - use onActivityResult (modern code)
+  - use general/universal openUrl() method/function
+  - better way of cropping images
+  - share image into IMG2TXT app to extract text from it
+  - translations (English & Arabic), default is English
+  - About Me
+  - ~~rate us on Google Play~~ (removed)
+  - link to Google Play
+- v2.5.1
+  - first opensource version release is v2.5.1 on April 21st, 2024
+  - support Android 6 (Marshmallow) (SDK 23)
+  - support Android 7
+  - support Android 8
+  - support Android 9
+  - support Android 10
+  - support Android 11
+  - support Android 12
+  - support Android 13
+- [v2.6.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.6.0)
+  - support Android 14 (SDK 34)
+  - show thresholded/cleaned image (created by Tesseract)
+- [v2.7.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.7.0)
+  - release v2.7.0 on May 29th, 2024
+  - show bounding rectangles/boxes around each recognized word
+- [v2.8.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.8.0)
+  - image to text OCR app release v2.8.0 on May 31st, 2024 with enhanced user experience and bug fixes.
+  - simplify app UI layout
+  - new simpler theme
+  - show alert/notice if the mean_confidence of result text is less than 60%
+  - on-device Tesseract OCR (English & Arabic models)
+  - on-device Google vision API (latin scripted languages)
+  - on-device ML Kit (latin scripted languages)
+  - in case of Arabic language or both (Arabic+English), use Tesseract OCR
+  - __fallback strategy__ in case of English language is ML Kit -> Google Vision -> TesseractOCR
+  - color-coded confidence/accuracy of the result text from ML Kit & Tesseract OCR
+  - prompt the app user to choose the language of text on the image before processing it
+  - customize crop-screen
+  - make result/extracted text editable
+  - add line breaks (newline) in extracted text (ML Kit & Tesseract OCR)
+- [v2.9.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.9.0)
+  - support Android 15 (SDK 35)
+  - save OCR history (aka : Detailed scanned images history)
+- Next Version
+  - batch processing (in bulk)
+  - PDF -> Images.foreach(ocr)
+  - expose more functions to Java : cpp files in `tesseract4android/src/main/cpp/tesseract` and java files in `tesseract4android/src/main/java/com/googlecode/tesseract/android` must be modified/added.
+  - support Hindi ( Indian language )
+  - support Farsi ( Persian language )
+  - save extracted text as PDF
+  - choose more than one image to OCR
+  - pre-process image with thresholding for more clarity and better results/accuracy/extracted text
+  - Ability to edit image before/after running OCR on it (manual)
+
