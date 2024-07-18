@@ -57,7 +57,7 @@ zip -r symbols.zip .
 
 4 . upload the `symbols.zip` file into Google Play Console/release
 
-## Software Versions & Tasks
+## Roadmap | timeline of release versions with tasks
 
 - Old Codebase
   - use onActivityResult (modern code)
