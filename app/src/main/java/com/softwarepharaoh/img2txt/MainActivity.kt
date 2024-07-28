@@ -1,6 +1,5 @@
 package com.softwarepharaoh.img2txt
 
-import DatabaseConfig
 import DatabaseHelper
 import android.Manifest
 import android.content.ClipData
@@ -21,7 +20,6 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
-import android.util.Log
 import android.util.SparseArray
 import android.view.Menu
 import android.view.MenuItem
