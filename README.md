@@ -117,3 +117,7 @@ zip -r symbols.zip .
   - pre-process image with thresholding for more clarity and better results/accuracy/extracted text
   - Ability to edit image before/after running OCR on it (manual)
 
+##  Resources & references
+
+- [Pre-Recognize Library](https://github.com/leha-bot/PRLib) - library with algorithms for improving OCR quality.
+
