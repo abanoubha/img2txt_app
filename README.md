@@ -27,39 +27,9 @@ Install the img2txt app from Google Play:
 
 I created the app to be available to all people who need it, all the time, everywhere. I'd like to create a developer community to maintain the app indefinitely.
 
-## documented fix
+## documented fixes
 
-Google Play : "This App Bundle contains native code, and you've not uploaded debug symbols. We recommend you upload a symbol file to make your crashes and ANRs easier to analyze and debug. Learn More"
-
-How to do that?
-
-1 . in `app/build.gradle` add:
-
-```
-android {
-   ...
-    defaultConfig {
-       ...
-        ndk {
-            debugSymbolLevel 'FULL'
-        }
-    }
-}
-```
-
-2 . go to this path inside your project
-
-```
-cd app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib
-```
-
-3 . compress them all in one file
-
-```
-zip -r symbols.zip .
-```
-
-4 . upload the `symbols.zip` file into Google Play Console/release
+Google Play : "This App Bundle contains native code, and you've not uploaded debug symbols. We recommend you upload a symbol file to make your crashes and ANRs easier to analyze and debug. Learn More". I documented [the fix on my tech blog here](https://abanoubhanna.com/posts/upload-symbol-file-google-play-publisher/).
 
 ## Roadmap | timeline of release versions with tasks
 
@@ -120,4 +90,3 @@ zip -r symbols.zip .
 ##  Resources & references
 
 - [Pre-Recognize Library](https://github.com/leha-bot/PRLib) - library with algorithms for improving OCR quality.
-
