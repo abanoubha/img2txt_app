@@ -86,9 +86,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         dbHelper = DatabaseHelper(applicationContext)
+        val historyAdapter = HistoryAdapter()
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = HistoryAdapter()
+            adapter = historyAdapter
         }
         updateHistoryList()
 
