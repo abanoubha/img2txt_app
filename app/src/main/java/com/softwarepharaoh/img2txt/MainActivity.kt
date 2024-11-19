@@ -120,9 +120,9 @@ class MainActivity : AppCompatActivity() {
             CropImageContract()
         ) { result ->
             if (result.isSuccessful) {
-                val uriContent = result.uriContent
+                photoUri = result.uriContent!!
                 // val uriFilePath = result.getUriFilePath(context = applicationContext) // optional usage
-                bmp = uriToBitmap(uriContent!!)
+                bmp = uriToBitmap(photoUri)
                 binding.ocrImage.visibility = View.VISIBLE
                 updateImageView()
                 binding.resultTextView.visibility = View.GONE
