@@ -76,7 +76,10 @@ Google Play : "This App Bundle contains native code, and you've not uploaded deb
 - [v2.9.0](https://github.com/abanoubha/img2txt_app/releases/tag/2.9.0)
   - support Android 15 (SDK 35)
   - save OCR history (aka : Detailed scanned images history)
+- v2.10.0
+  - fix: make sure OCR history is saved in local db
 - Next Version
+  - rewrite app in Jetpack Compose
   - batch processing (in bulk)
   - PDF -> Images.foreach(ocr)
   - expose more functions to Java : cpp files in `tesseract4android/src/main/cpp/tesseract` and java files in `tesseract4android/src/main/java/com/googlecode/tesseract/android` must be modified/added.
