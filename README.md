@@ -89,3 +89,100 @@ Google Play : "This App Bundle contains native code, and you've not uploaded deb
 ##  Resources & references
 
 - [Pre-Recognize Library](https://github.com/leha-bot/PRLib) - library with algorithms for improving OCR quality.
+
+## code snippets
+
+```java
+public Bitmap convertGray(Bitmap bitmap3) {
+        colorMatrix = new ColorMatrix();
+        colorMatrix.setSaturation(0);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(colorMatrix);
+
+        Paint paint = new Paint();
+        paint.setColorFilter(filter);
+        Bitmap result = Bitmap.createBitmap(bitmap3.getWidth(), bitmap3.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(result);
+
+        canvas.drawBitmap(bitmap3, 0, 0, paint);
+        return result;
+    }
+
+   /**
+     * Binarization
+     *
+     * @param tmp Binarization threshold Default 100
+     */
+    private Bitmap binaryzation(Bitmap bitmap22, int tmp) {
+        // Get the width and height of the image
+        int width = bitmap22.getWidth();
+        int height = bitmap22.getHeight();
+        // Create a binary image
+        Bitmap bitmap;
+        bitmap = bitmap22.copy(Bitmap.Config.ARGB_8888, true);
+        // Traverse the original image pixels and perform binarization processing
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                // Get the current pixel value
+                int pixel = bitmap.getPixel(i, j);
+                // Get the value of the alpha channel
+                int alpha = pixel & 0xFF000000;
+                // Get the value of Red
+                int red = (pixel & 0x00FF0000) >> 16;
+                // Get the value of Green
+                int green = (pixel & 0x0000FF00) >> 8;
+                // Get the value of Blue
+                int blue = pixel & 0x000000FF;
+
+                if (red > tmp) {
+                    red = 255;
+                } else {
+                    red = 0;
+                }
+                if (blue > tmp) {
+                    blue = 255;
+                } else {
+                    blue = 0;
+                }
+                if (green > tmp) {
+                    green = 255;
+                } else {
+                    green = 0;
+                }
+
+                // The optimal pixel value is calculated by weighted average algorithm.
+                int gray = (int) ((float) red * 0.3 + (float) green * 0.59 + (float) blue * 0.11);
+                // Set the image to black and white
+                if (gray <= 95) {
+                    gray = 0;
+                } else {
+                    gray = 255;
+                }
+                // Get the new pixel value
+                int newPiexl = alpha | (gray << 16) | (gray << 8) | gray;
+                // Assign pixels to the new image
+                bitmap.setPixel(i, j, newPiexl);
+            }
+        }
+        return bitmap;
+    }
+
+private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            final Bitmap bitmap_1 = convertGray(BitmapFactory.decodeFile(path));
+
+            baseApi.setImage(bitmap_1);
+            result = baseApi.getUTF8Text();
+            baseApi.recycle();
+
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    imageView2.setImageBitmap(bitmap_1);
+                    textView.setText(result);
+                    dialog.dismiss();
+                }
+            });
+        }
+    };
+```
