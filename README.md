@@ -74,6 +74,7 @@ Google Play : "This App Bundle contains native code, and you've not uploaded deb
   - save OCR history (aka : Detailed scanned images history)
 - v2.10.0
   - fix: make sure OCR history is saved in local db
+  - feature: add reward ad (to collect points)
 - Next Version
   - rewrite app in Jetpack Compose
   - batch processing (in bulk)
