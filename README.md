@@ -89,6 +89,7 @@ Google Play : "This App Bundle contains native code, and you've not uploaded deb
 ##  Resources & references
 
 - [Pre-Recognize Library](https://github.com/leha-bot/PRLib) - library with algorithms for improving OCR quality.
+- [using Tesseract in Python with OpenCV pre-processing](https://github.com/NanoNets/ocr-with-tesseract/blob/master/tesseract-tutorial.ipynb)
 
 ## code snippets
 
