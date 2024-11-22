@@ -75,7 +75,7 @@ Google Play : "This App Bundle contains native code, and you've not uploaded deb
 - v2.10.0
   - fix: make sure OCR history is saved in local db
   - feature: add reward ad (to collect points)
-  - feature: add coins count
+  - ui: add coins count
 - Next Version
   - rewrite app in Jetpack Compose
   - batch processing (in bulk)
