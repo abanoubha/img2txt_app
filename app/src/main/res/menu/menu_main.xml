@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.softwarepharaoh.img2txt.MainActivity">
     <item
+        android:id="@+id/points"
+        android:icon="@drawable/ic_coins"
+        android:orderInCategory="100"
+        android:title="0"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/camera"
         android:icon="@drawable/ic_camera"
         android:orderInCategory="200"
