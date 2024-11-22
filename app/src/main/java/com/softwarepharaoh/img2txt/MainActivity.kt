@@ -20,6 +20,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
+import android.util.Log
 import android.util.SparseArray
 import android.view.Menu
 import android.view.MenuItem
@@ -41,6 +42,8 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.text.TextBlock
 import com.google.android.gms.vision.text.TextRecognizer
@@ -78,6 +81,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cropViewOptions: CropImageOptions
     // local db
     private lateinit var dbHelper: DatabaseHelper
+
+    private lateinit var rewardAd: RewardedAd
+    private var userPoints: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -194,6 +200,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         loadAds()
+        loadRewardAd()
         onSharedIntent()
 
     } // onCreate
@@ -237,6 +244,40 @@ class MainActivity : AppCompatActivity() {
             binding.ocrImage.setImageBitmap(bmp)
             binding.ocrImage.layoutParams.height = bmp.height
             binding.ocrImage.requestLayout()
+        }
+    }
+
+    private fun loadRewardAd() {
+        val adRequest = AdRequest.Builder().build()
+        RewardedAd.load(
+            this,
+            "ca-app-pub-4971969455307153/4714052505",
+            adRequest,
+            object : RewardedAdLoadCallback() {
+
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    Log.d("TAG", adError.message)
+                }
+
+                override fun onAdLoaded(rewardedAd: RewardedAd) {
+                    this@MainActivity.rewardAd = rewardedAd
+                    Log.d("TAG", "Ad was loaded.")
+                }
+            }
+        )
+    }
+
+    private fun showRewardAd() {
+        if (::rewardAd.isInitialized && rewardAd != null) {
+            rewardAd.show(this) { rewardItem ->
+                // User earned reward.
+                val rewardAmount = rewardItem.amount // 1
+                val rewardType = rewardItem.type // Reward
+                // Add 1 point to the user's daily point count
+                userPoints += 1
+            }
+        } else {
+            Log.d("TAG", "The rewarded ad wasn't ready yet.")
         }
     }
 
