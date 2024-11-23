@@ -163,11 +163,6 @@ class MainActivity : AppCompatActivity() {
             // cropFun(uri)
         }
 
-        binding.galleryBtn.setOnClickListener {
-            // deleteAllPhotos()
-            grabImage.launch("image/*")
-        }
-
         takeImage = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
             ActivityResultCallback { result: ActivityResult ->
@@ -181,23 +176,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
-
-        binding.cameraBtn.setOnClickListener {
-            // deleteAllPhotos()
-            if (checkCameraPermission()) {
-                val values = ContentValues()
-                values.put(MediaStore.Images.Media.TITLE, "New Picture")
-                values.put(MediaStore.Images.Media.DESCRIPTION, "From Camera")
-                photoUri = contentResolver.insert(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
-                )!!
-                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-                takeImage.launch(cameraIntent)
-            } else {
-                showDialogMsg() //if yes see the permission requests
-            }
-        }
 
         binding.fabCamera.setOnClickListener { _ ->
             // deleteAllPhotos()

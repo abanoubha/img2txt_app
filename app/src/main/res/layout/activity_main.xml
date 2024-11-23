@@ -96,44 +96,16 @@
                     android:textColor="?android:attr/textColorHint"
                     android:visibility="gone" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/copyBtn"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
+                    android:layout_margin="8dp"
+                    android:contentDescription="@string/copy_extracted_text"
+                    android:paddingHorizontal="4dp"
                     android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/cameraBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:contentDescription="@string/camera_button"
-                        android:paddingHorizontal="4dp"
-                        android:text="@string/camera"
-                        app:icon="@drawable/ic_camera" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/galleryBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:contentDescription="@string/gallery_button"
-                        android:paddingHorizontal="4dp"
-                        android:text="@string/gallery"
-                        app:icon="@drawable/ic_gallery" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/copyBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:contentDescription="@string/copy_extracted_text"
-                        android:paddingHorizontal="4dp"
-                        android:text="@string/copy"
-                        app:icon="@drawable/ic_copy" />
-
-                </LinearLayout>
+                    android:text="@string/copy"
+                    app:icon="@drawable/ic_copy" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
