@@ -1,143 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-4971969455307153/7793928641" />
-
-    <ProgressBar
-        android:id="@+id/progressbar"
-        style="?android:attr/progressBarStyleHorizontal"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:indeterminate="true"
-        android:visibility="gone" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ScrollView
-        android:id="@+id/scroll"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|center"
-            android:gravity="top|center"
-            android:orientation="vertical">
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-4971969455307153/7793928641" />
 
-            <ImageView
-                android:id="@+id/ocrImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="8dp"
-                android:contentDescription="@string/image_to_ocr"
-                android:visibility="gone"
-                app:srcCompat="@mipmap/ic_launcher" />
+        <ProgressBar
+            android:id="@+id/progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:indeterminate="true"
+            android:visibility="gone" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/resultTextView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:paddingLeft="16dp"
-                android:paddingTop="30dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="30dp"
-                android:scrollbars="vertical"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="20sp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/colorCodeSummary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingTop="30dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="8dp"
-                android:text="@string/color_codes_summary"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="18sp"
-                app:drawableEndCompat="@drawable/ic_bulb" />
-
-            <TextView
-                android:id="@+id/colorCodeDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="30dp"
-                android:text="@string/color_codes"
-                android:textColor="?android:attr/textColorHint"
-                android:visibility="gone" />
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:layout_gravity="top|center"
+                android:gravity="top|center"
+                android:orientation="vertical">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/cameraBtn"
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/ocrImage"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:contentDescription="@string/camera_button"
-                    android:paddingHorizontal="4dp"
-                    android:text="@string/camera"
-                    app:icon="@drawable/ic_camera" />
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="8dp"
+                    android:contentDescription="@string/image_to_ocr"
+                    android:visibility="gone"
+                    app:srcCompat="@mipmap/ic_launcher" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/galleryBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:contentDescription="@string/gallery_button"
-                    android:paddingHorizontal="4dp"
-                    android:text="@string/gallery"
-                    app:icon="@drawable/ic_gallery" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/resultTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="30dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="30dp"
+                    android:scrollbars="vertical"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="20sp"
+                    android:visibility="gone" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/copyBtn"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/colorCodeSummary"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:contentDescription="@string/copy_extracted_text"
-                    android:paddingHorizontal="4dp"
-                    android:text="@string/copy"
-                    app:icon="@drawable/ic_copy" />
+                    android:paddingLeft="16dp"
+                    android:paddingTop="30dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/color_codes_summary"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    app:drawableEndCompat="@drawable/ic_bulb" />
+
+                <TextView
+                    android:id="@+id/colorCodeDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="30dp"
+                    android:text="@string/color_codes"
+                    android:textColor="?android:attr/textColorHint"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/cameraBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:contentDescription="@string/camera_button"
+                        android:paddingHorizontal="4dp"
+                        android:text="@string/camera"
+                        app:icon="@drawable/ic_camera" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/galleryBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:contentDescription="@string/gallery_button"
+                        android:paddingHorizontal="4dp"
+                        android:text="@string/gallery"
+                        app:icon="@drawable/ic_gallery" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/copyBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:contentDescription="@string/copy_extracted_text"
+                        android:paddingHorizontal="4dp"
+                        android:text="@string/copy"
+                        app:icon="@drawable/ic_copy" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        </ScrollView>
 
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/copyright" />
 
-    </ScrollView>
+    </LinearLayout>
 
-    <TextView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/copyright" />
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:contentDescription="take a photo"
+        android:src="@drawable/ic_camera"
+        android:tint="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@+id/fabGallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/colorAccent" />
 
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:contentDescription="get an image from gallery/studio"
+        android:src="@drawable/ic_gallery"
+        android:tint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/colorAccent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

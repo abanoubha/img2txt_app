@@ -199,6 +199,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.fabCamera.setOnClickListener { v ->
+            Snackbar.make(v, "camera button tapped", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()
+        }
+
+        binding.fabGallery.setOnClickListener { v ->
+            Snackbar.make(v, "gallery button tapped", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()
+        }
+
         loadAds()
         loadRewardAd()
         onSharedIntent()
