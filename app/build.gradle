@@ -47,6 +47,9 @@ android {
 }
 
 dependencies {
+    // shared preference
+    implementation 'androidx.preference:preference-ktx:1.2.1'
+
     // old Google vision
     implementation "com.google.android.gms:play-services-vision:20.1.3"
 

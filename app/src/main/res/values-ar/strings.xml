@@ -24,7 +24,7 @@
     <string name="camera_button">زر الكاميرا</string>
     <string name="gallery_button">زر الأستوديو</string>
     <string name="copy_extracted_text">نسخ النصوص</string>
-    <string name="copy">نسخ</string>
+    <string name="copy_text">نسخ</string>
     <string name="about_me">
         إسمي أبانوب حنا
         \nمبرمج
@@ -76,4 +76,5 @@
         \n+80% -> أبيض أو أسود ⚪⚫
         ]]>
     </string>
+    <string name="copyright">© أبانوب حَنّا</string>
 </resources>

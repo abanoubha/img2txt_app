@@ -22,7 +22,7 @@
     <string name="camera_button">capture an image with camera</string>
     <string name="gallery_button">grab an image from gallery</string>
     <string name="copy_extracted_text">copy extracted text</string>
-    <string name="copy">Copy</string>
+    <string name="copy_text">Copy</string>
     <string name="about_me">
         My name is Abanoub Hanna
         \nsoftware developer

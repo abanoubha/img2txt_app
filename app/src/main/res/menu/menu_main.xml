@@ -4,10 +4,15 @@
     tools:context="com.softwarepharaoh.img2txt.MainActivity">
     <item
         android:id="@+id/points"
-        android:icon="@drawable/ic_coins"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:title="0"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/coins"
+        android:icon="@drawable/ic_coins"
+        android:orderInCategory="300"
+        android:title="0"
+        app:showAsAction="always" />
     <item
         android:id="@+id/info"
         android:icon="@drawable/abanoub_hanna"

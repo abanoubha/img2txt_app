@@ -19,6 +19,7 @@ import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
+import androidx.preference.PreferenceManager
 import android.provider.MediaStore
 import android.util.Log
 import android.util.SparseArray
@@ -61,6 +62,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.FileNotFoundException
 import java.io.InputStream
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -199,11 +201,30 @@ class MainActivity : AppCompatActivity() {
             grabImage.launch("image/*")
         }
 
+        addDailyPoints(3)
         loadAds()
         loadRewardAd()
         onSharedIntent()
 
     } // onCreate
+
+    private fun addDailyPoints(pointsToAdd : Int) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val lastUpdateTime = sharedPreferences.getLong("last_update_time", 0)
+
+        val currentTime = System.currentTimeMillis()
+        val timeDifference = currentTime - lastUpdateTime
+
+        if (timeDifference >= TimeUnit.DAYS.toMillis(1)) {
+            val currentPoints = sharedPreferences.getInt("user_points", 0)
+            val newPoints = currentPoints + pointsToAdd
+
+            val editor = sharedPreferences.edit()
+            editor.putInt("user_points", newPoints)
+            editor.putLong("last_update_time", currentTime)
+            editor.apply()
+        }
+    }
 
     private fun updateHistoryList() {
         val records: List<History> = dbHelper.getAllRecords()
@@ -341,6 +362,9 @@ class MainActivity : AppCompatActivity() {
         val id = item.itemId
         if (id == R.id.points) {
             // TODO: add an intent/route to UserPoints activity/page
+            return true
+        } else if (id == R.id.coins) {
+            // TODO: the same as above
             return true
         } else if (id == R.id.info) {
             startActivity(Intent(this, InfoActivity::class.java))
@@ -546,6 +570,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun recognize(languages: String) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val userPoints = sharedPreferences.getInt("user_points", 0)
+
+        if (userPoints < 1) {
+            showRewardAd()
+        }
+
+        // TODO: decrement 1 point per 1 page scan. If PDF, decrement one per page
+        val editor = sharedPreferences.edit()
+        editor.putInt("user_points", userPoints - 1)
+        editor.apply()
+
         binding.resultTextView.setText("")
 
         binding.progressbar.postOnAnimation {

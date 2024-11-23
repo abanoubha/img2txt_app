@@ -104,7 +104,7 @@
                     android:contentDescription="@string/copy_extracted_text"
                     android:paddingHorizontal="4dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/copy"
+                    android:text="@string/copy_text"
                     app:icon="@drawable/ic_copy" />
 
                 <androidx.recyclerview.widget.RecyclerView
