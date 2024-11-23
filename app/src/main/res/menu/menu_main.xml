@@ -9,18 +9,6 @@
         android:title="0"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/camera"
-        android:icon="@drawable/ic_camera"
-        android:orderInCategory="200"
-        android:title="@string/camera"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/gallery"
-        android:icon="@drawable/ic_gallery"
-        android:orderInCategory="300"
-        android:title="@string/gallery"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/info"
         android:icon="@drawable/abanoub_hanna"
         android:orderInCategory="400"

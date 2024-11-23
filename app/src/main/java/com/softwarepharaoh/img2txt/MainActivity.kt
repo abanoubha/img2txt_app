@@ -361,25 +361,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        if (id == R.id.camera) {
-            // deleteAllPhotos()
-            if (checkCameraPermission()) {
-                val values = ContentValues()
-                values.put(MediaStore.Images.Media.TITLE, "New Picture")
-                values.put(MediaStore.Images.Media.DESCRIPTION, "From Camera")
-                photoUri = contentResolver.insert(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
-                )!!
-                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-                takeImage.launch(cameraIntent)
-            } else {
-                showDialogMsg() //if yes see the permission requests
-            }
-            return true
-        } else if (id == R.id.gallery) {
-            // deleteAllPhotos()
-            grabImage.launch("image/*")
+        if (id == R.id.points) {
+            // TODO: add an intent/route to UserPoints activity/page
             return true
         } else if (id == R.id.info) {
             startActivity(Intent(this, InfoActivity::class.java))
@@ -414,7 +397,7 @@ class MainActivity : AppCompatActivity() {
                 // User agree to accept permissions, show them permissions requests
                 requestCameraPermission()
                 //re-call the camera button
-                findViewById<View>(R.id.camera).performClick()
+                binding.fabCamera.performClick()
             }
             .setNegativeButton(getString(R.string.no)) { _, _ ->
                 // dialog, id
