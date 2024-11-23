@@ -76,6 +76,10 @@ Google Play : "This App Bundle contains native code, and you've not uploaded deb
   - fix: make sure OCR history is saved in local db
   - feature: add reward ad (to collect points)
   - ui: add coins count
+  - add 3 points every day
+  - 1 image scan consumes 1 point
+  - watch reward ads to gain points
+  - save points in sharedPreferences
 - Next Version
   - rewrite app in Jetpack Compose
   - batch processing (in bulk)
