@@ -199,16 +199,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.fabCamera.setOnClickListener { v ->
-            Snackbar.make(v, "camera button tapped", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
+        binding.fabCamera.setOnClickListener { _ ->
+            // deleteAllPhotos()
+            if (checkCameraPermission()) {
+                val values = ContentValues()
+                values.put(MediaStore.Images.Media.TITLE, "New Picture")
+                values.put(MediaStore.Images.Media.DESCRIPTION, "From Camera")
+                photoUri = contentResolver.insert(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
+                )!!
+                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                takeImage.launch(cameraIntent)
+            } else {
+                showDialogMsg() //if yes see the permission requests
+            }
         }
 
-        binding.fabGallery.setOnClickListener { v ->
-            Snackbar.make(v, "gallery button tapped", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
+        binding.fabGallery.setOnClickListener { _ ->
+            // deleteAllPhotos()
+            grabImage.launch("image/*")
         }
 
         loadAds()
