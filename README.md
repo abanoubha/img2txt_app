@@ -80,6 +80,7 @@ Google Play : "This App Bundle contains native code, and you've not uploaded deb
   - 1 image scan consumes 1 point
   - watch reward ads to gain points
   - save points in sharedPreferences
+  - upgrade Tesseract4Android lib
 - Next Version
   - rewrite app in Jetpack Compose
   - batch processing (in bulk)
