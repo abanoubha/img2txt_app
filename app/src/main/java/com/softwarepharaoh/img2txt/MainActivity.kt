@@ -580,9 +580,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         // TODO: decrement 1 point per 1 page scan. If PDF, decrement one per page
-        val editor = sharedPreferences.edit()
-        editor.putInt("user_points", userPoints - 1)
-        editor.apply()
+        sharedPreferences.edit {
+            putInt("user_points", userPoints - 1)
+        }
 
         binding.resultTextView.setText("")
 
