@@ -16,3 +16,4 @@ captures
 local.properties
 app/release/*.aab
 app/release/*
+.kotlin
