@@ -64,6 +64,7 @@ import kotlinx.coroutines.withContext
 import java.io.FileNotFoundException
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
+import androidx.core.util.size
 
 class MainActivity : AppCompatActivity() {
 
@@ -846,7 +847,7 @@ class MainActivity : AppCompatActivity() {
             val items: SparseArray<TextBlock> = textRecognizer.detect(frame)
             val recognizedText = StringBuilder()
 
-            for (i in 0 until items.size()) {
+            for (i in 0 until items.size) {
                 val block: TextBlock = items.valueAt(i)
                 recognizedText.append(block.value.toString(), ' ')
             }
