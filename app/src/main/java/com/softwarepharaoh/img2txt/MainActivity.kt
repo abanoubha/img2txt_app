@@ -1,6 +1,5 @@
 package com.softwarepharaoh.img2txt
 
-import DatabaseHelper
 import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -19,7 +18,6 @@ import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.preference.PreferenceManager
 import android.provider.MediaStore
 import android.util.Log
 import android.util.SparseArray
@@ -34,7 +32,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.core.text.HtmlCompat
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
@@ -219,10 +219,10 @@ class MainActivity : AppCompatActivity() {
             val currentPoints = sharedPreferences.getInt("user_points", 0)
             val newPoints = currentPoints + pointsToAdd
 
-            val editor = sharedPreferences.edit()
-            editor.putInt("user_points", newPoints)
-            editor.putLong("last_update_time", currentTime)
-            editor.apply()
+            sharedPreferences.edit() {
+                putInt("user_points", newPoints)
+                putLong("last_update_time", currentTime)
+            }
         }
     }
 
