@@ -1,9 +1,9 @@
 package com.softwarepharaoh.img2txt
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.softwarepharaoh.img2txt.databinding.ActivityInfoBinding
 
 class InfoActivity : AppCompatActivity() {
@@ -48,7 +48,7 @@ class InfoActivity : AppCompatActivity() {
 
     private fun openUrl(url: String?) {
         val openURL = Intent(Intent.ACTION_VIEW)
-        openURL.data = Uri.parse(url)
+        openURL.data = url?.toUri()
         startActivity(openURL)
     }
 
