@@ -1,11 +1,11 @@
 package com.softwarepharaoh.img2txt
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 
@@ -33,7 +33,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
             HtmlCompat.FROM_HTML_MODE_COMPACT
         )
 
-        holder.imageView.setImageURI(Uri.parse(currentHistory.imageUrl))
+        holder.imageView.setImageURI(currentHistory.imageUrl.toUri())
     }
 
     override fun getItemCount() = historyList.size
