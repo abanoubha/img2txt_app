@@ -1,3 +1,5 @@
+package com.softwarepharaoh.img2txt
+
 object DatabaseConfig {
     const val DATABASE_VERSION = 1
     const val DATABASE_NAME = "local.db"
