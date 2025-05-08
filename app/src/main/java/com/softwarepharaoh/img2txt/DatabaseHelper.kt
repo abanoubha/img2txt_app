@@ -1,8 +1,9 @@
+package com.softwarepharaoh.img2txt
+
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.softwarepharaoh.img2txt.History
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DatabaseConfig.DATABASE_NAME, null, DatabaseConfig.DATABASE_VERSION) {
 
