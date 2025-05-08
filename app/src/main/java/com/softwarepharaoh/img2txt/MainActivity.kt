@@ -220,7 +220,7 @@ class MainActivity : AppCompatActivity() {
             val currentPoints = sharedPreferences.getInt("user_points", 0)
             val newPoints = currentPoints + pointsToAdd
 
-            sharedPreferences.edit() {
+            sharedPreferences.edit {
                 putInt("user_points", newPoints)
                 putLong("last_update_time", currentTime)
             }
