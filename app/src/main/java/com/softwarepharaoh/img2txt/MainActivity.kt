@@ -34,6 +34,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.text.HtmlCompat
+import androidx.core.view.isGone
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.canhub.cropper.CropImageContract
@@ -102,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         updateHistoryList()
 
         binding.colorCodeSummary.setOnClickListener {
-            if (binding.colorCodeDetails.visibility == View.GONE) {
+            if (binding.colorCodeDetails.isGone) {
                 binding.colorCodeDetails.visibility = View.VISIBLE
             } else {
                 binding.colorCodeDetails.visibility = View.GONE
