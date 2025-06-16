@@ -3,7 +3,7 @@
 A free opensource Android app to extract text from images using OCR technology.
 
 - works offline (without Internet access)
-- works on all versions of Android; from Android 6 up to Android 14 (the latest version release)
+- works on all versions of Android; from Android 6 up to Android 16 (the latest version release)
 - get image from __gallery__ or from __Camera__ for extracting text
 - crop image before OCR processing
 - share image into IMG2TXT app to extract text from it
