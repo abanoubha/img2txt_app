@@ -81,6 +81,9 @@ Google Play : "This App Bundle contains native code, and you've not uploaded deb
   - watch reward ads to gain points
   - save points in sharedPreferences
   - upgrade Tesseract4Android lib
+  - upgrade Android Gradle Plugin
+  - upgrade libs (Google services ads, lifecycle viewmodel ktx, appcompat)
+  - upgrade Android SDK to 32 (Android 16)
 - Next Version
   - rewrite app in Jetpack Compose
   - batch processing (in bulk)
