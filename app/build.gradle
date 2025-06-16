@@ -61,7 +61,7 @@ dependencies {
 //    implementation 'cz.adaptech:tesseract4android:4.1.1'
 //    implementation 'cz.adaptech.tesseract4android:tesseract4android:4.4.0'
     // better by 4.89% to 6.36% ref : https://docs.google.com/spreadsheets/d/1MQuBcowushPIvi_4tHi_iVYOtGJlo_elSQ5At9KdDF8/edit
-    implementation 'cz.adaptech.tesseract4android:tesseract4android-openmp:4.8.0'
+    implementation 'cz.adaptech.tesseract4android:tesseract4android-openmp:4.9.0'
 
     implementation "com.vanniktech:android-image-cropper:4.6.0"
     // implementation 'com.github.yalantis:ucrop:2.2.6'
