@@ -177,7 +177,7 @@ public Bitmap convertGray(Bitmap bitmap3) {
         return bitmap;
     }
 
-private Runnable runnable = new Runnable() {
+private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
             final Bitmap bitmap_1 = convertGray(BitmapFactory.decodeFile(path));

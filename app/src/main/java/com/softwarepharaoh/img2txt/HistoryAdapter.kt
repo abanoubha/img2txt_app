@@ -9,9 +9,7 @@ import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 
-class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
-
-    private var historyList = listOf<History>().toMutableList()
+class HistoryAdapter(private val historyList: List<History>, private val onItemClick: (History) -> Unit) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.textView)
@@ -34,13 +32,12 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
         )
 
         holder.imageView.setImageURI(currentHistory.imageUrl.toUri())
+
+        holder.itemView.setOnClickListener {
+            assert(position != RecyclerView.NO_POSITION)
+            onItemClick(currentHistory)
+        }
     }
 
     override fun getItemCount() = historyList.size
-
-    fun updateData(histories: List<History>) {
-        historyList.clear()
-        historyList.addAll(histories)
-        notifyDataSetChanged()
-    }
 }

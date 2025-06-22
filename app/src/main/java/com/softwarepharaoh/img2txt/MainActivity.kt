@@ -34,6 +34,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.text.HtmlCompat
+import androidx.core.util.size
 import androidx.core.view.isGone
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -64,7 +65,6 @@ import kotlinx.coroutines.withContext
 import java.io.FileNotFoundException
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
-import androidx.core.util.size
 
 class MainActivity : AppCompatActivity() {
 
@@ -96,11 +96,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         dbHelper = DatabaseHelper(applicationContext)
-        val historyAdapter = HistoryAdapter()
-        binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = historyAdapter
-        }
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+
         updateHistoryList()
 
         binding.colorCodeSummary.setOnClickListener {
@@ -229,11 +227,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateHistoryList() {
-        val records: List<History> = dbHelper.getAllRecords()
-        // for (record in records) {
-        //    Log.d("Record", "ID: ${record.id}, Text: ${record.text}, Image URL: ${record.imageUrl}")
-        //}
-        (binding.recyclerView.adapter as HistoryAdapter).updateData(records)
+        binding.recyclerView.adapter = HistoryAdapter(dbHelper.getAllRecords()) { clickedItem ->
+            val intent = Intent(this, ItemActivity::class.java).apply {
+                putExtra("ITEM_ID", clickedItem.id)
+                putExtra("ITEM_TEXT", clickedItem.text)
+                putExtra("ITEM_URI", clickedItem.imageUrl)
+            }
+            startActivity(intent)
+        }
     }
 
     private fun getLanguages() {
@@ -294,8 +295,8 @@ class MainActivity : AppCompatActivity() {
         if (::rewardAd.isInitialized && rewardAd != null) {
             rewardAd.show(this) { rewardItem ->
                 // User earned reward.
-                val rewardAmount = rewardItem.amount // 1
-                val rewardType = rewardItem.type // Reward
+                rewardItem.amount // 1
+                rewardItem.type // Reward
                 // Add 1 point to the user's daily point count
                 userPoints += 1
             }
@@ -531,7 +532,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
         val nw = connectivityManager.activeNetwork ?: return false
         val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
         return when {
@@ -776,7 +777,7 @@ class MainActivity : AppCompatActivity() {
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 1f
 
-        val result = recognizer.process(image)
+        recognizer.process(image)
             .addOnSuccessListener { visionText ->
                 for (block in visionText.textBlocks) {
 //                    val boundingBox = block.boundingBox
