@@ -87,8 +87,16 @@ class ItemActivity : AppCompatActivity() {
             val updatedText = binding.txt.text.toString()
             val ret = dbHelper.updateText(itemId, updatedText)
             if (ret != 1){
-                Toast.makeText(this, "Error: can not save the item", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Error: can not save the item. ret = $ret", Toast.LENGTH_LONG).show()
             }
+        }
+
+        binding.deleteBtn.setOnClickListener {
+            val ret = dbHelper.delete(itemId)
+            if (ret != 1){
+                Toast.makeText(this, "Error: can not save the item. ret = $ret", Toast.LENGTH_LONG).show()
+            }
+            onBackPressedDispatcher.onBackPressed()
         }
 
     } // onCreate

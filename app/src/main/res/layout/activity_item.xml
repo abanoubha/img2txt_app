@@ -77,5 +77,16 @@
             android:text="@string/save_text"
             app:icon="@drawable/ic_save" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/deleteBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:contentDescription="@string/delete"
+            android:paddingHorizontal="4dp"
+            android:gravity="center_horizontal"
+            android:text="@string/delete"
+            app:icon="@drawable/ic_delete" />
+
     </LinearLayout>
 </ScrollView>

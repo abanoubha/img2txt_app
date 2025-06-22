@@ -75,4 +75,17 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DatabaseConfi
         return result
     }
 
+    fun delete(rowId: Long): Int {
+        val db = this.writableDatabase
+        val selection = "${DatabaseConfig.COLUMN_ID} = ?"
+        val selectionArgs = arrayOf(rowId.toString())
+        val count = db.delete(
+            DatabaseConfig.TABLE_NAME,
+            selection,
+            selectionArgs
+        )
+        db.close()
+        return count
+    }
+
 }
