@@ -38,8 +38,6 @@ import androidx.core.util.size
 import androidx.core.view.isGone
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.canhub.cropper.CropImageContract
-import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
