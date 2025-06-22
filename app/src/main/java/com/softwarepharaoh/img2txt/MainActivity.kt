@@ -24,6 +24,7 @@ import android.util.SparseArray
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -33,6 +34,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.core.util.size
 import androidx.core.view.isGone
@@ -180,6 +182,18 @@ class MainActivity : AppCompatActivity() {
         binding.fabGallery.setOnClickListener { _ ->
             // deleteAllPhotos()
             grabImage.launch("image/*")
+        }
+
+        binding.deleteAllBtn.setOnClickListener {
+            dbHelper.getAllRecords().forEach { i ->
+                this.contentResolver.delete(i.imageUrl.toUri(), null, null)
+                val ret = dbHelper.delete(i.id)
+                if (ret != 1){
+                    Toast.makeText(this, "Error: can not delete an item #${i.id}. ret = $ret", Toast.LENGTH_LONG).show()
+                }
+            }
+            Toast.makeText(this, "All items deleted !", Toast.LENGTH_LONG).show()
+            updateHistoryList()
         }
 
         addDailyPoints(3)
@@ -487,12 +501,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         // deleteAllPhotos()
         super.onDestroy()
-    }
-
-    private fun deleteAllPhotos() {
-        if (::photoUri.isInitialized) {
-            this.contentResolver.delete(photoUri, null, null)
-        }
     }
 
 //    private val isNetworkAvailable: Boolean

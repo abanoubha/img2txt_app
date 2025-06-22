@@ -79,4 +79,5 @@
     <string name="save_extracted_text">save extracted text</string>
     <string name="save_text">Save</string>
     <string name="delete">Delete</string>
+    <string name="delete_all">Delete all !</string>
 </resources>

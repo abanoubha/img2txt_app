@@ -95,7 +95,7 @@ class ItemActivity : AppCompatActivity() {
             this.contentResolver.delete(uri!!, null, null)
             val ret = dbHelper.delete(itemId)
             if (ret != 1){
-                Toast.makeText(this, "Error: can not save the item. ret = $ret", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Error: can not delete the item #$itemId. ret = $ret", Toast.LENGTH_LONG).show()
             }
             onBackPressedDispatcher.onBackPressed()
         }
