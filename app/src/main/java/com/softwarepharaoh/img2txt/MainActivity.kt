@@ -99,14 +99,6 @@ class MainActivity : AppCompatActivity() {
 
         updateHistoryList()
 
-        binding.colorCodeSummary.setOnClickListener {
-            if (binding.colorCodeDetails.isGone) {
-                binding.colorCodeDetails.visibility = View.VISIBLE
-            } else {
-                binding.colorCodeDetails.visibility = View.GONE
-            }
-        }
-
         cropViewOptions = CropImageOptions(
             activityBackgroundColor = Color.BLACK,
             initialCropWindowPaddingRatio = 0.2f,
@@ -140,15 +132,6 @@ class MainActivity : AppCompatActivity() {
             } else {
                 // An error occurred.
                 "Error: ${result.error}".also { binding.resultTextView.setText(it) }
-            }
-        }
-
-        binding.copyBtn.setOnClickListener {
-            val toBeCopied = binding.resultTextView.text.toString()
-            if (toBeCopied.isNotEmpty()) {
-                copy2Clipboard(toBeCopied)
-            } else {
-                showNotification(getString(R.string.no_text))
             }
         }
 
@@ -338,19 +321,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         loadAds()
-    }
-
-    private fun copy2Clipboard(text: CharSequence?) {
-        val clipboard: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("copy text", text)
-        clipboard.setPrimaryClip(clip)
-        showNotification(getString(R.string.copied))
-    }
-
-    private fun showNotification(text: String?) {
-        Snackbar.make(findViewById(R.id.copyBtn), text as CharSequence, Snackbar.LENGTH_LONG)
-            .setAction("Action", null)
-            .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

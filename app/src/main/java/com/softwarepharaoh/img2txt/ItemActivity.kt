@@ -1,8 +1,11 @@
 package com.softwarepharaoh.img2txt
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +13,8 @@ import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isGone
+import com.google.android.material.snackbar.Snackbar
 import com.softwarepharaoh.img2txt.databinding.ActivityItemBinding
 import java.io.FileNotFoundException
 import java.io.InputStream
@@ -56,5 +61,36 @@ class ItemActivity : AppCompatActivity() {
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
         )
+
+        binding.copyBtn.setOnClickListener {
+            val toBeCopied = binding.txt.text.toString()
+            if (toBeCopied.isNotEmpty()) {
+                copy2Clipboard(toBeCopied)
+            } else {
+                showNotification(getString(R.string.no_text))
+            }
+        }
+
+        binding.colorCodeSummary.setOnClickListener {
+            if (binding.colorCodeDetails.isGone) {
+                binding.colorCodeDetails.visibility = View.VISIBLE
+            } else {
+                binding.colorCodeDetails.visibility = View.GONE
+            }
+        }
     }
+
+    private fun copy2Clipboard(text: CharSequence?) {
+        val clipboard: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("copy text", text)
+        clipboard.setPrimaryClip(clip)
+        showNotification(getString(R.string.copied))
+    }
+
+    private fun showNotification(text: String?) {
+        Snackbar.make(findViewById(R.id.copyBtn), text as CharSequence, Snackbar.LENGTH_LONG)
+            .setAction("Action", null)
+            .show()
+    }
+
 }

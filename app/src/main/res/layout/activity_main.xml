@@ -72,42 +72,6 @@
                     android:textSize="20sp"
                     android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/colorCodeSummary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="30dp"
-                    android:paddingRight="16dp"
-                    android:paddingBottom="8dp"
-                    android:text="@string/color_codes_summary"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="18sp"
-                    app:drawableEndCompat="@drawable/ic_bulb" />
-
-                <TextView
-                    android:id="@+id/colorCodeDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingRight="16dp"
-                    android:paddingBottom="30dp"
-                    android:text="@string/color_codes"
-                    android:textColor="?android:attr/textColorHint"
-                    android:visibility="gone" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/copyBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:contentDescription="@string/copy_extracted_text"
-                    android:paddingHorizontal="4dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/copy_text"
-                    app:icon="@drawable/ic_copy" />
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
