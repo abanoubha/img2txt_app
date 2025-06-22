@@ -21,6 +21,8 @@
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:hint="extracted text"
-        android:inputType="textAutoCorrect" />
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp"
+        android:inputType="textMultiLine" />
 
 </LinearLayout>
