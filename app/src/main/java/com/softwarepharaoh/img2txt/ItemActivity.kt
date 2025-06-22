@@ -92,6 +92,7 @@ class ItemActivity : AppCompatActivity() {
         }
 
         binding.deleteBtn.setOnClickListener {
+            this.contentResolver.delete(uri!!, null, null)
             val ret = dbHelper.delete(itemId)
             if (ret != 1){
                 Toast.makeText(this, "Error: can not save the item. ret = $ret", Toast.LENGTH_LONG).show()
