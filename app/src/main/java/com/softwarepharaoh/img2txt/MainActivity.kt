@@ -227,7 +227,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateHistoryList() {
-        binding.recyclerView.adapter = HistoryAdapter(dbHelper.getAllRecords()) { clickedItem ->
+        val items = dbHelper.getAllRecords()
+
+        binding.recyclerView.adapter = HistoryAdapter(items) { clickedItem ->
             val intent = Intent(this, ItemActivity::class.java).apply {
                 putExtra("ITEM_ID", clickedItem.id)
                 putExtra("ITEM_TEXT", clickedItem.text)
@@ -235,6 +237,8 @@ class MainActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
+
+        binding.deleteAllBtn.isEnabled = !(items.isEmpty() || items.size == 0)
     }
 
     private fun getLanguages() {
