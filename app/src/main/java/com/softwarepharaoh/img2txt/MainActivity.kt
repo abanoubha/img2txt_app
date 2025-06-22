@@ -189,6 +189,11 @@ class MainActivity : AppCompatActivity() {
 
     } // onCreate
 
+    override fun onRestart() {
+        super.onRestart()
+        updateHistoryList()
+    }
+
     private fun addDailyPoints(pointsToAdd : Int) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val lastUpdateTime = sharedPreferences.getLong("last_update_time", 0)
