@@ -76,5 +76,6 @@
         ]]>
     </string>
     <string name="copyright">© Abanoub Hanna</string>
-    <string name="title_activity_details">DetailsActivity</string>
+    <string name="save_extracted_text">save extracted text</string>
+    <string name="save_text">Save</string>
 </resources>

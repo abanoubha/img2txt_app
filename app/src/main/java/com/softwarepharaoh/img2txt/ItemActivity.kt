@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -22,6 +23,7 @@ import java.io.InputStream
 class ItemActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityItemBinding
+    private lateinit var dbHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,8 @@ class ItemActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        dbHelper = DatabaseHelper(applicationContext)
 
         val itemId = intent.getLongExtra("ITEM_ID", -1) // -1 is a default value if not found
         if (itemId.toInt() == -1){
@@ -78,7 +82,16 @@ class ItemActivity : AppCompatActivity() {
                 binding.colorCodeDetails.visibility = View.GONE
             }
         }
-    }
+
+        binding.saveBtn.setOnClickListener {
+            val updatedText = binding.txt.text.toString()
+            val ret = dbHelper.updateText(itemId, updatedText)
+            if (ret != 1){
+                Toast.makeText(this, "Error: can not save the item", Toast.LENGTH_LONG).show()
+            }
+        }
+
+    } // onCreate
 
     private fun copy2Clipboard(text: CharSequence?) {
         val clipboard: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager

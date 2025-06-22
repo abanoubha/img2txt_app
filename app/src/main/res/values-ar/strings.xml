@@ -77,4 +77,6 @@
         ]]>
     </string>
     <string name="copyright">© أبانوب حَنّا</string>
+    <string name="save_extracted_text">حفظ النصوص</string>
+    <string name="save_text">حفظ</string>
 </resources>

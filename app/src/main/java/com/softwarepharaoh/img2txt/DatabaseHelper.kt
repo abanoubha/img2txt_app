@@ -32,6 +32,23 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DatabaseConfi
         return newRowId
     }
 
+    fun updateText(rowId: Long, newText: String): Int {
+        val db = this.writableDatabase
+        val contentValues = ContentValues().apply {
+            put(DatabaseConfig.COLUMN_TEXT, newText)
+        }
+        val selection = "${DatabaseConfig.COLUMN_ID} = ?"
+        val selectionArgs = arrayOf(rowId.toString())
+        val count = db.update(
+            DatabaseConfig.TABLE_NAME,
+            contentValues,
+            selection,
+            selectionArgs
+        )
+        db.close()
+        return count // Returns the number of rows affected
+    }
+
     fun getAllRecords(): List<History> {
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM ${DatabaseConfig.TABLE_NAME}", null)

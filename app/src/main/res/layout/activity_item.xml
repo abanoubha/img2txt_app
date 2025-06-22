@@ -59,12 +59,23 @@
             android:id="@+id/copyBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginHorizontal="8dp"
             android:contentDescription="@string/copy_extracted_text"
             android:paddingHorizontal="4dp"
             android:gravity="center_horizontal"
             android:text="@string/copy_text"
             app:icon="@drawable/ic_copy" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:contentDescription="@string/save_extracted_text"
+            android:paddingHorizontal="4dp"
+            android:gravity="center_horizontal"
+            android:text="@string/save_text"
+            app:icon="@drawable/ic_save" />
 
     </LinearLayout>
 </ScrollView>
