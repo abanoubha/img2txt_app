@@ -142,7 +142,6 @@ class MainActivity : AppCompatActivity() {
         grabImage = registerForActivityResult(
             ActivityResultContracts.GetContent()
         ) { uri: Uri? ->
-            // deleteAllPhotos()
             binding.ocrImage.setImageURI(uri)
             cropImage.launch(
                 CropImageContractOptions(uri, cropViewOptions)
@@ -154,7 +153,6 @@ class MainActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult(),
             ActivityResultCallback { result: ActivityResult ->
                 if (result.resultCode == RESULT_OK) {
-                    // deleteAllPhotos()
                     binding.ocrImage.setImageURI(photoUri)
                     cropImage.launch(
                         CropImageContractOptions(photoUri, cropViewOptions)
@@ -165,7 +163,6 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.fabCamera.setOnClickListener { _ ->
-            // deleteAllPhotos()
             if (checkCameraPermission()) {
                 val values = ContentValues()
                 values.put(MediaStore.Images.Media.TITLE, "New Picture")
@@ -182,7 +179,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fabGallery.setOnClickListener { _ ->
-            // deleteAllPhotos()
             grabImage.launch("image/*")
         }
 
@@ -279,8 +275,6 @@ class MainActivity : AppCompatActivity() {
         val dialog = builder.create()
         dialog.show()
 
-        // clean up
-        // deleteAllPhotos()
     }
 
     private fun updateImageView() {
@@ -519,7 +513,6 @@ class MainActivity : AppCompatActivity() {
 //                recognize()
 //                //preProcessing()
 //
-//                deleteAllPhotos()
 //            } else if (resultCode == UCrop.RESULT_ERROR) {
 //                showNotification("Error 721 : error occurred in cropping")
 //            }
@@ -543,7 +536,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        // deleteAllPhotos()
         super.onDestroy()
     }
 
