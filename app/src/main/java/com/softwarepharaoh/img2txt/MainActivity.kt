@@ -370,18 +370,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == R.id.points) {
-            // TODO: add an intent/route to UserPoints activity/page
-            return true
-        } else if (id == R.id.coins) {
-            // TODO: the same as above
-            return true
-        } else if (id == R.id.info) {
-            startActivity(Intent(this, InfoActivity::class.java))
-            return true
+        return when (item.itemId) {
+            R.id.points -> {
+                Toast.makeText(this, "Menu Item (points count) clicked!", Toast.LENGTH_LONG).show()
+                true
+            }
+            R.id.coins -> {
+                Toast.makeText(this, "Menu Item (coins icon) clicked!", Toast.LENGTH_LONG).show()
+                true
+            }
+            R.id.info -> {
+                startActivity(Intent(this, InfoActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun updatePointsInMenu(newText: String) {
