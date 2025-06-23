@@ -89,6 +89,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rewardAd: RewardedAd
     private var userPoints: Int = 0
 
+    private var myMenu: Menu? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -223,7 +225,21 @@ class MainActivity : AppCompatActivity() {
                 putInt("user_points", newPoints)
                 putLong("last_update_time", currentTime)
             }
+
+            updatePointsInMenu(newPoints.toString())
         }
+    }
+
+    private fun addPoints(pointsToAdd : Int) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val currentPoints = sharedPreferences.getInt("user_points", 0)
+        val newPoints = currentPoints + pointsToAdd
+
+        sharedPreferences.edit {
+            putInt("user_points", newPoints)
+        }
+
+        updatePointsInMenu(newPoints.toString())
     }
 
     private fun updateHistoryList() {
@@ -301,8 +317,8 @@ class MainActivity : AppCompatActivity() {
                 // User earned reward.
                 rewardItem.amount // 1
                 rewardItem.type // Reward
-                // Add 1 point to the user's daily point count
-                userPoints += 1
+                // Add 1 point to the user's point(s) count
+                addPoints(1)
             }
         } else {
             Log.d("TAG", "The rewarded ad wasn't ready yet.")
@@ -349,6 +365,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
+        myMenu = menu // Store the menu reference
         return true
     }
 
@@ -365,6 +382,16 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun updatePointsInMenu(newText: String) {
+        myMenu?.let { menu ->
+            val menuItem: MenuItem? = menu.findItem(R.id.points)
+            menuItem?.title = newText
+            Toast.makeText(this, "Menu item text changed to: $newText", Toast.LENGTH_LONG).show()
+        } ?: run {
+            Toast.makeText(this, "Menu not yet available to change text.", Toast.LENGTH_LONG).show()
+        }
     }
 
 //    un-used code rn
