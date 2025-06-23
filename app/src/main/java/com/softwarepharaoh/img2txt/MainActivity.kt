@@ -203,11 +203,6 @@ class MainActivity : AppCompatActivity() {
         loadRewardAd()
         onSharedIntent()
 
-        // show the current user points
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val currentPoints = sharedPreferences.getInt("user_points", 0)
-        updatePointsInMenu(currentPoints.toString())
-
     } // onCreate
 
     override fun onRestart() {
@@ -372,6 +367,14 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         myMenu = menu // Store the menu reference
         return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        // show the current user points
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val currentPoints = sharedPreferences.getInt("user_points", 0)
+        updatePointsInMenu(currentPoints.toString())
+        return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
