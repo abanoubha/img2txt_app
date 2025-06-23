@@ -372,10 +372,12 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.points -> {
+                showRewardAd()
                 Toast.makeText(this, "Menu Item (points count) clicked!", Toast.LENGTH_LONG).show()
                 true
             }
             R.id.coins -> {
+                showRewardAd()
                 Toast.makeText(this, "Menu Item (coins icon) clicked!", Toast.LENGTH_LONG).show()
                 true
             }
