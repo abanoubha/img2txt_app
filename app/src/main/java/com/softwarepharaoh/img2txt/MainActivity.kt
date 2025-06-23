@@ -203,6 +203,11 @@ class MainActivity : AppCompatActivity() {
         loadRewardAd()
         onSharedIntent()
 
+        // show the current user points
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val currentPoints = sharedPreferences.getInt("user_points", 0)
+        updatePointsInMenu(currentPoints.toString())
+
     } // onCreate
 
     override fun onRestart() {
