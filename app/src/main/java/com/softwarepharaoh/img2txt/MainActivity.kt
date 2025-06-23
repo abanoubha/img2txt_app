@@ -600,6 +600,8 @@ class MainActivity : AppCompatActivity() {
 
         if (userPoints < 1) {
             showRewardAd()
+            Toast.makeText(this, "You have 0 points, see ads to get more points!", Toast.LENGTH_LONG).show()
+            return
         }
 
         // TODO: decrement 1 point per 1 page scan. If PDF, decrement one per page
