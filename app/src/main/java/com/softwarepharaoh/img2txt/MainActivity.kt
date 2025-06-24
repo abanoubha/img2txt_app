@@ -1,8 +1,6 @@
 package com.softwarepharaoh.img2txt
 
 import android.Manifest
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -12,11 +10,14 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.pdf.PdfRenderer
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
+import android.os.ParcelFileDescriptor
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
@@ -34,10 +35,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.core.graphics.createBitmap
 import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.core.util.size
-import androidx.core.view.isGone
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.canhub.cropper.CropImageOptions
@@ -50,7 +51,6 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.text.TextBlock
 import com.google.android.gms.vision.text.TextRecognizer
-import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -62,8 +62,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStream
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -74,15 +78,18 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var bmp: Bitmap
     private lateinit var cameraPermission: Array<String>
+    private lateinit var pdfPermission: Array<String>
 
     // private var currentPhotoPath: String? = null
     private lateinit var binding: ActivityMainBinding
     private lateinit var baseAPI: TessBaseAPI
     private lateinit var takeImage: ActivityResultLauncher<Intent>
     private lateinit var grabImage: ActivityResultLauncher<String>
+    private lateinit var grabPdf: ActivityResultLauncher<String>
     private lateinit var photoUri: Uri
     private lateinit var cropImage: ActivityResultLauncher<CropImageContractOptions>
     private lateinit var cropViewOptions: CropImageOptions
+
     // local db
     private lateinit var dbHelper: DatabaseHelper
 
@@ -149,6 +156,76 @@ class MainActivity : AppCompatActivity() {
             // cropFun(uri)
         }
 
+        grabPdf = registerForActivityResult(
+            ActivityResultContracts.GetContent()
+        ) { uri: Uri? ->
+            uri?.let {
+                val bitmaps = mutableListOf<Bitmap>()
+                var parcelFileDescriptor: ParcelFileDescriptor? = null
+                var pdfRenderer: PdfRenderer? = null
+
+                try {
+                    parcelFileDescriptor =
+                        this.contentResolver.openFileDescriptor(it, "r") // it = uri
+                    if (parcelFileDescriptor == null) {
+                        // Handle error: could not open file descriptor
+                        return@let //@withContext emptyList()
+                    }
+
+                    pdfRenderer = PdfRenderer(parcelFileDescriptor)
+
+                    for (i in 0 until pdfRenderer.pageCount) {
+                        val page = pdfRenderer.openPage(i)
+                        val bitmap = createBitmap(page.width, page.height)
+                        page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+                        bitmaps.add(bitmap)
+                        page.close()
+                    }
+                } catch (e: IOException) {
+                    // Handle IO errors (e.g., file not found, permission issues)
+                    e.printStackTrace()
+                } finally {
+                    pdfRenderer?.close()
+                    parcelFileDescriptor?.close()
+                }
+
+                // handle only the first page
+                val bitmap = bitmaps[0]
+                val u: Uri
+
+                val directory = File(this.filesDir, "pdf_pages") // App-specific directory
+                if (!directory.exists()) {
+                    directory.mkdirs()
+                }
+                val fileName = "pdf_page_pageNumber1_${UUID.randomUUID()}.png"
+                val file = File(directory, fileName)
+
+                var outputStream: FileOutputStream? = null
+                try {
+                    outputStream = FileOutputStream(file)
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                    //return@let
+                    u = Uri.fromFile(file)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    return@let//@withContext null
+                } finally {
+                    outputStream?.close()
+                }
+
+                bmp = bitmap
+                photoUri = u
+
+                binding.ocrImage.visibility = View.VISIBLE
+                updateImageView()
+                binding.resultTextView.visibility = View.GONE
+                updateImageView()
+
+                getLanguages()
+
+            }
+        }
+
         takeImage = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
             ActivityResultCallback { result: ActivityResult ->
@@ -182,12 +259,24 @@ class MainActivity : AppCompatActivity() {
             grabImage.launch("image/*")
         }
 
+        binding.fabPdf.setOnClickListener { _ ->
+            if (checkStoragePermissions()) {
+                grabPdf.launch("application/pdf")
+            } else {
+                showPermissionRationaleDialog() //if yes see the permission requests
+            }
+        }
+
         binding.deleteAllBtn.setOnClickListener {
             dbHelper.getAllRecords().forEach { i ->
                 this.contentResolver.delete(i.imageUrl.toUri(), null, null)
                 val ret = dbHelper.delete(i.id)
-                if (ret != 1){
-                    Toast.makeText(this, "Error: can not delete an item #${i.id}. ret = $ret", Toast.LENGTH_LONG).show()
+                if (ret != 1) {
+                    Toast.makeText(
+                        this,
+                        "Error: can not delete an item #${i.id}. ret = $ret",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
             Toast.makeText(this, "All items deleted !", Toast.LENGTH_LONG).show()
@@ -206,7 +295,7 @@ class MainActivity : AppCompatActivity() {
         updateHistoryList()
     }
 
-    private fun addDailyPoints(pointsToAdd : Int) {
+    private fun addDailyPoints(pointsToAdd: Int) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val lastUpdateTime = sharedPreferences.getLong("last_update_time", 0)
 
@@ -226,7 +315,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addPoints(pointsToAdd : Int) {
+    private fun addPoints(pointsToAdd: Int) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val currentPoints = sharedPreferences.getInt("user_points", 0)
         val newPoints = currentPoints + pointsToAdd
@@ -378,15 +467,18 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Menu Item (points count) clicked!", Toast.LENGTH_LONG).show()
                 true
             }
+
             R.id.coins -> {
                 showRewardAd()
                 Toast.makeText(this, "Menu Item (coins icon) clicked!", Toast.LENGTH_LONG).show()
                 true
             }
+
             R.id.info -> {
                 startActivity(Intent(this, InfoActivity::class.java))
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -461,6 +553,13 @@ class MainActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE)
     }
 
+    private fun requestPdfPermission() {
+        pdfPermission = arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        ActivityCompat.requestPermissions(this, pdfPermission, PDF_REQUEST_CODE)
+    }
+
     private fun checkCameraPermission(): Boolean {
         val result0 = ContextCompat.checkSelfPermission(
             this,
@@ -471,6 +570,41 @@ class MainActivity : AppCompatActivity() {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) == (PackageManager.PERMISSION_GRANTED)
         return result0 || result1 // use OR instead of AND
+    }
+
+    private fun checkStoragePermissions(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return true
+        }
+
+        return ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == (PackageManager.PERMISSION_GRANTED)
+    }
+
+    private fun showPermissionRationaleDialog() {
+        val builder = AlertDialog.Builder(this@MainActivity)
+        builder.setMessage(R.string.permissionStorageHint)
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
+                // dialog, id
+                // User agree to accept permissions, show them permissions requests
+                requestPdfPermission()
+                //re-call the camera button
+                binding.fabPdf.performClick()
+            }
+            .setNegativeButton(getString(R.string.no)) { _, _ ->
+                // dialog, id
+                // No -> so user can not use camera to take picture of papers
+                val notifBuilder = AlertDialog.Builder(this@MainActivity)
+                notifBuilder.setMessage(getString(R.string.permissions_notice))
+                    .setPositiveButton(
+                        getString(R.string.done)
+                    ) { _, _ ->
+                        // dialog, id
+                        //do nothing
+                    }.show()
+            }.show()
     }
 
 //    old code w old deprecated method n old dep/lib
@@ -595,7 +729,11 @@ class MainActivity : AppCompatActivity() {
 
         if (userPoints < 1) {
             showRewardAd()
-            Toast.makeText(this, "You have 0 points, see ads to get more points!", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "You have 0 points, see ads to get more points!",
+                Toast.LENGTH_LONG
+            ).show()
             return
         }
 
@@ -771,7 +909,7 @@ class MainActivity : AppCompatActivity() {
                     binding.progressbar.visibility = View.GONE
                 }
 
-                if (::photoUri.isInitialized){
+                if (::photoUri.isInitialized) {
                     dbHelper.insertTextAndImageUrl(recognizedText.toString(), photoUri.toString())
                     updateHistoryList()
                 }
@@ -847,7 +985,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 gText = recognizedText.toString()
-                if (::photoUri.isInitialized){
+                if (::photoUri.isInitialized) {
                     dbHelper.insertTextAndImageUrl(gText, photoUri.toString())
                     updateHistoryList()
                 }
@@ -873,7 +1011,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             gText = recognizedText.toString()
-            if (::photoUri.isInitialized){
+            if (::photoUri.isInitialized) {
                 dbHelper.insertTextAndImageUrl(gText, photoUri.toString())
                 updateHistoryList()
             }
@@ -887,5 +1025,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         // const val IMAGE_GALLERY_REQUEST = 10
         const val CAMERA_REQUEST_CODE = 20
+        const val PDF_REQUEST_CODE = 30
     }
 }

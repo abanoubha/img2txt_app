@@ -8,6 +8,7 @@
     <string name="no_text">no text found</string>
     <string name="identifying">Running OCR on image…</string>
     <string name="permissionHint">You must accept the permission to use camera and storage to let the app use camera inside the app to take image of books and papers</string>
+    <string name="permissionStorageHint">You must accept the permission to access storage to let the app grab PDF files to be OCRed</string>
     <string name="image_to_ocr">image to OCR</string>
     <string name="get_image_from_gallery">get image from gallery</string>
     <string name="arrow_to_camera_icon">arrow to camera icon</string>

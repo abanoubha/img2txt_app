@@ -10,6 +10,7 @@
     <string name="no_text">لا يوجد نصوص لنسخها</string>
     <string name="identifying">جاري التعرف على الكلمات …</string>
     <string name="permissionHint">لابد أن توافق على إذن الذاكرة والكاميرا لكي تستطيع استخدام الكاميرا داخل التطبيق.</string>
+    <string name="permissionStorageHint">لابد أن توافق على إذن الذاكرة لكي تستطيع اختيار ملف بي دي إف لإستخراج النصوص.</string>
     <string name="image_to_ocr">التعرف الضوئي على الكلمات المكتوبة على الصورة</string>
     <string name="get_image_from_gallery">جلب الصورة من الاستوديو</string>
     <string name="arrow_to_camera_icon">سهم لأيقونة الكاميرا</string>
