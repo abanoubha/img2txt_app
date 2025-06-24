@@ -83,7 +83,7 @@
                     android:layout_marginHorizontal="8dp"
                     android:contentDescription="@string/delete_all"
                     android:paddingHorizontal="4dp"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:text="@string/delete_all"
                     app:icon="@drawable/ic_delete" />
 
